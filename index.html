@@ -2,9 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-TxldCIIsIKwrBNmdAJJyx0KRG1Yq8DBsevnBdqQLgOQ=' 'sha256-GjMm6HHQJJX9a3fc2vwQRc+lLBf/QOhxtx1koSnm6kA='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KOgaJjCJrKdwY044+BBlyZjthIqkAvi1VjYvseO7Wao=' 'sha256-TxldCIIsIKwrBNmdAJJyx0KRG1Yq8DBsevnBdqQLgOQ=' 'sha256-GjMm6HHQJJX9a3fc2vwQRc+lLBf/QOhxtx1koSnm6kA=' 'sha256-UQf6EhZKUA0dLUSE5hQgqd5wXX4A5mm/l2Ko3qaeRSc=' https://stats.arian-shafa.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://stats.arian-shafa.xyz; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(()=>{const q=new URLSearchParams(location.search).get('notrack');if(q===null)return;try{q==='0'?localStorage.removeItem('umami.disabled'):localStorage.setItem('umami.disabled','1');}catch(e){}history.replaceState(null,'',location.pathname+location.hash);})();</script>
+<script defer src="https://stats.arian-shafa.xyz/script.js" data-website-id="337739b6-0b9c-4dc0-a4d5-2a65ee574b85" data-domains="arian-shafa.xyz" data-exclude-search="true" data-performance="true"></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f1420'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%238fb8e8'/%3E%3C/svg%3E">
 <link rel="canonical" href="https://arian-shafa.xyz/">
 <meta property="og:title" content="Arian Shafa · Analytics Engineer">
@@ -411,7 +413,7 @@ footer { padding-block: 26px 40px; color: var(--fg-2); font-size: 13px; display:
   dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
 })();
 </script>
-<footer><span>© 2026 Arian Shafa · Amsterdam</span><span class="mono">arian-shafa.xyz</span></footer></div>
+<footer><span>© 2026 Arian Shafa · Amsterdam</span><span>Anonymous, cookie-free visitor statistics (self-hosted <a href="https://umami.is" target="_blank" rel="noopener noreferrer">Umami</a>).</span><span class="mono">arian-shafa.xyz</span></footer></div>
 
 <script>
 (function () {
@@ -450,5 +452,64 @@ footer { padding-block: 26px 40px; color: var(--fg-2); font-size: 13px; display:
 })();
 </script>
 
+<script>(() => {
+  const T = (name, data) => { try { window.umami && window.umami.track(name, data); } catch (e) {} };
+  const sectionOf = el => (el.closest('section[id], header[id], nav') || {}).id || (el.closest('nav') ? 'nav' : 'other');
+  const label = el => (el.getAttribute('aria-label') || el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+
+  // Section views: once per page load, when 40% of a section is on screen
+  const seen = new Set();
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting && !seen.has(e.target.id)) { seen.add(e.target.id); T('section-view', { section: e.target.id }); }
+  }), { threshold: 0.4 });
+  document.querySelectorAll('section[id], footer').forEach(s => { if (!s.id) s.id = 'footer'; io.observe(s); });
+
+  // Scroll depth: 25 / 50 / 75 / 100 %
+  const marks = [25, 50, 75, 100], hit = new Set();
+  addEventListener('scroll', () => {
+    const d = document.documentElement, pct = (scrollY + innerHeight) / d.scrollHeight * 100;
+    marks.forEach(m => { if (pct >= m - 1 && !hit.has(m)) { hit.add(m); T('scroll-depth', { percent: m }); } });
+  }, { passive: true });
+
+  // Engaged time: reported once when the visitor leaves or hides the tab
+  let active = 0, last = Date.now(), sent = false;
+  const tick = () => { if (document.visibilityState === 'visible') active += Date.now() - last; last = Date.now(); };
+  document.addEventListener('visibilitychange', () => {
+    tick();
+    if (document.visibilityState === 'hidden' && !sent && active > 3000) {
+      sent = true; const s = Math.round(active / 1000);
+      T('engaged-time', { seconds: s, bucket: s < 15 ? '<15s' : s < 60 ? '15-60s' : s < 180 ? '1-3m' : s < 600 ? '3-10m' : '10m+' });
+    }
+  });
+
+  // Clicks (one delegated listener)
+  document.addEventListener('click', ev => {
+    const el = ev.target.closest('a, button');
+    if (!el) return;
+    const section = sectionOf(el);
+    if (el.matches('.more')) {
+      const post = el.closest('.post');
+      return T('read-more', { post: post ? post.id : '?', expanded: el.getAttribute('aria-expanded') !== 'true' });
+    }
+    if (el.matches('.story-btn')) {
+      const card = el.closest('.card, .job');
+      const name = card && card.querySelector('h3') ? label(card.querySelector('h3')) : section;
+      return T('story-open', { item: name, section });
+    }
+    if (el.id === 'theme-toggle') return T('theme-toggle', { to: document.documentElement.dataset.theme === 'light' ? 'dark' : 'light' });
+    if (el.tagName !== 'A') return T('button-click', { label: label(el), section });
+    const href = el.getAttribute('href') || '';
+    if (href.startsWith('#')) return T('nav-click', { target: href.slice(1), from: section });
+    if (/\.pdf($|\?)/.test(href)) return T('cv-download', { from: section, label: label(el) });
+    if (href.startsWith('mailto:')) return T('contact-click', { channel: 'email', from: section });
+    let host = ''; try { host = new URL(href, location.href).hostname; } catch (e) {}
+    if (/linkedin\.com/.test(host) && (section === 'contact' || section === 'top' || section === 'cv')) return T('contact-click', { channel: 'linkedin', from: section });
+    const name = section === 'projects' || section === 'dashboards'
+      ? label(el.closest('.card') ? el.closest('.card').querySelector('h3') || el : el) : label(el);
+    const ev2 = section === 'projects' ? 'project-click' : section === 'dashboards' ? 'dashboard-click'
+      : section === 'writings' ? 'writing-click' : section === 'releases' ? 'release-click' : 'outbound-click';
+    T(ev2, { name, host, section });
+  }, true);
+})();</script>
 </body>
 </html>
