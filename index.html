@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KOgaJjCJrKdwY044+BBlyZjthIqkAvi1VjYvseO7Wao=' 'sha256-TxldCIIsIKwrBNmdAJJyx0KRG1Yq8DBsevnBdqQLgOQ=' 'sha256-GjMm6HHQJJX9a3fc2vwQRc+lLBf/QOhxtx1koSnm6kA=' 'sha256-UQf6EhZKUA0dLUSE5hQgqd5wXX4A5mm/l2Ko3qaeRSc=' https://stats.arian-shafa.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://stats.arian-shafa.xyz; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KOgaJjCJrKdwY044+BBlyZjthIqkAvi1VjYvseO7Wao=' 'sha256-CxHvaERdc0aXKmcjfcFuF1QmSoOZg8q4NUJea69bO5k=' 'sha256-GjMm6HHQJJX9a3fc2vwQRc+lLBf/QOhxtx1koSnm6kA=' 'sha256-UQf6EhZKUA0dLUSE5hQgqd5wXX4A5mm/l2Ko3qaeRSc=' https://stats.arian-shafa.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://stats.arian-shafa.xyz; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(()=>{const q=new URLSearchParams(location.search).get('notrack');if(q===null)return;try{q==='0'?localStorage.removeItem('umami.disabled'):localStorage.setItem('umami.disabled','1');}catch(e){}history.replaceState(null,'',location.pathname+location.hash);})();</script>
@@ -405,7 +405,7 @@ footer { padding-block: 26px 40px; color: var(--fg-2); font-size: 13px; display:
     e.preventDefault(); e.stopPropagation();
     body.innerHTML = b.dataset.posts.split(' ').map(id => {
       const src = document.getElementById(id);
-      return '<article><div class="ptext">' + src.querySelector('.ptext').innerHTML + '</div><p style="margin-top:12px"><a class="ext" href="' + src.querySelector('.ext').href + '" target="_blank" rel="noopener noreferrer">View on LinkedIn ↗</a></p></article>';
+      return '<article><div class="ptext">' + src.querySelector('.ptext').innerHTML + '</div><p style="margin-top:12px"><a class="ext" href="' + src.querySelector('.ext').href + '" target="_blank" rel="noopener noreferrer">' + src.querySelector('.ext').textContent + '</a></p></article>';
     }).join('');
     dlg.showModal(); body.parentElement.scrollTop = 0;
   }));
