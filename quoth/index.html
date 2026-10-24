@@ -1,0 +1,1266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KOgaJjCJrKdwY044+BBlyZjthIqkAvi1VjYvseO7Wao=' 'sha256-3Z0vGTM2VZ4aG3ETNDIhGktg6Ij5P+WqdNxrMd2JDEs=' https://stats.arian-shafa.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://stats.arian-shafa.xyz; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(()=>{const q=new URLSearchParams(location.search).get('notrack');if(q===null)return;try{q==='0'?localStorage.removeItem('umami.disabled'):localStorage.setItem('umami.disabled','1');}catch(e){}history.replaceState(null,'',location.pathname+location.hash);})();</script>
+<script defer src="https://stats.arian-shafa.xyz/script.js" data-website-id="24a8fc44-03b1-469d-9ff7-a907fda4cab5" data-domains="arian-shafa.xyz" data-exclude-search="true"></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f1420'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%238fb8e8'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://arian-shafa.xyz/quoth/">
+<meta property="og:title" content="Quoth · free dictation for Mac">
+<meta property="og:description" content="Hold a key, talk, and tidy text appears wherever you type. Free, open source, and everything stays on your Mac.">
+<meta property="og:url" content="https://arian-shafa.xyz/quoth/">
+<meta property="og:type" content="website">
+<title>Quoth · free dictation for Mac</title>
+<meta name="description" content="Quoth is a free, open-source dictation app for Mac: hold a key, talk, and tidy text appears wherever you type. Everything runs on your own Mac. Try a clickable demo.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Same tokens as the homepage; the app replica (.mac) has its own macOS-like tokens for both themes. */
+:root {
+  --bg: #0c1016; --bg-2: #121823; --line: #222b39; --fg: #e7ecf3; --fg-2: #9aa6b8; --accent: #8fb8de; --warm: #d8c19c;
+  --shadow: 0 18px 50px rgb(0 0 0 / .35);
+  --f-display: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --s-1: 13px; --s0: 16px; --s1: 19px; --s2: 26px; --s3: 38px; --s4: clamp(44px, 8vw, 84px);
+  color-scheme: dark;
+  /* app replica, dark */
+  --w-bg: #1e1e1e; --w-side: #282828; --w-row: #2a2a2a; --w-line: rgb(255 255 255 / .09); --w-fg: rgb(255 255 255 / .88);
+  --w-fg2: rgb(235 235 245 / .56); --w-acc: #0a84ff; --w-green: #32d74b; --w-orange: #ff9f0a; --w-red: #ff453a; --w-yellow: #ffd60a;
+  --w-ctl: rgb(255 255 255 / .13); --w-ctl-on: rgb(255 255 255 / .3); --w-field: rgb(255 255 255 / .06); --w-sel: rgb(255 255 255 / .11);
+  --w-card: rgb(255 255 255 / .05); --w-knob: #e8e8e8;
+  --desk: radial-gradient(120% 90% at 20% 0%, #3b4a7a 0%, #1d2440 45%, #0f1324 100%);
+  --desk-bar: rgb(0 0 0 / .28); --desk-fg: rgb(255 255 255 / .92);
+}
+:root[data-theme="light"] {
+  --bg: #f6f7f9; --bg-2: #ffffff; --line: #dde2ea; --fg: #121823; --fg-2: #586477;
+  --accent: #2f6596; --warm: #8a6a33; --shadow: 0 18px 50px rgb(18 24 35 / .10);
+  color-scheme: light;
+  --w-bg: #ffffff; --w-side: #eeedf0; --w-row: #ffffff; --w-line: rgb(0 0 0 / .09); --w-fg: rgb(0 0 0 / .86);
+  --w-fg2: rgb(60 60 67 / .62); --w-acc: #007aff; --w-green: #28cd41; --w-orange: #f08a00; --w-red: #ff3b30; --w-yellow: #e6b800;
+  --w-ctl: rgb(0 0 0 / .07); --w-ctl-on: #ffffff; --w-field: #ffffff; --w-sel: rgb(0 0 0 / .08);
+  --w-card: rgb(0 0 0 / .04); --w-knob: #ffffff;
+  --desk: radial-gradient(120% 90% at 20% 0%, #c9d6f2 0%, #a9b9e3 45%, #8b9bd0 100%);
+  --desk-bar: rgb(255 255 255 / .45); --desk-fg: rgb(0 0 0 / .85);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: var(--s0); line-height: 1.6; -webkit-font-smoothing: antialiased; transition: background .3s, color .3s; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1080px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 40px); }
+.mono { font-family: var(--f-mono); font-size: var(--s-1); letter-spacing: .02em; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-2); margin: 0; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; text-wrap: balance; margin: 0; letter-spacing: -.01em; }
+h2 { font-size: var(--s3); line-height: 1.1; }
+h3 { font-size: var(--s2); line-height: 1.15; }
+p { margin: 0; }
+
+.nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; }
+.mark { font-family: var(--f-display); font-size: 21px; text-decoration: none; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.mark i { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); display: inline-block; }
+.links { display: flex; gap: clamp(12px, 2.4vw, 28px); align-items: center; }
+.links a { text-decoration: none; color: var(--fg-2); font-size: 14px; }
+.links a:hover { color: var(--fg); }
+.toggle { background: none; border: 1px solid var(--line); color: var(--fg-2); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; flex: none; }
+.toggle:hover { color: var(--fg); border-color: var(--fg-2); }
+@media (max-width: 720px) { .links a.opt { display: none; } }
+
+.hero { padding-block: clamp(48px, 8vw, 96px) clamp(28px, 4vw, 44px); position: relative; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 22px 22px; mask-image: radial-gradient(ellipse 70% 80% at 85% 30%, #000 0%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse 70% 80% at 85% 30%, #000 0%, transparent 70%); pointer-events: none; }
+.hero .wrap { position: relative; }
+.hero h1 { font-size: var(--s4); line-height: 1; margin-top: 14px; }
+.hero .lede { font-family: var(--f-display); font-size: clamp(22px, 2.6vw, 30px); line-height: 1.3; margin-top: 22px; max-width: 32ch; }
+.hero .lede em { color: var(--accent); }
+.hero .bio { color: var(--fg-2); margin-top: 18px; max-width: 62ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 999px; border: 1px solid var(--line); text-decoration: none; font-size: 15px; font-weight: 500; background: var(--bg-2); cursor: pointer; color: var(--fg); font-family: var(--f-body); }
+.btn:hover { border-color: var(--fg-2); }
+.btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.btn.primary:hover { opacity: .9; }
+.btn svg { width: 16px; height: 16px; }
+.req { margin-top: 16px; color: var(--fg-2); }
+
+section.block { padding-block: clamp(56px, 8vw, 96px) 0; }
+.head { margin-bottom: 26px; }
+.head p.sub { color: var(--fg-2); max-width: 64ch; margin-top: 10px; }
+.note-demo { margin-top: 12px; color: var(--fg-2); display: flex; gap: 8px; align-items: baseline; }
+.note-demo::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--warm); flex: none; transform: translateY(-2px); }
+
+/* ---------- try-it desktop ---------- */
+.desk { position: relative; border-radius: 16px; overflow: hidden; background: var(--desk); border: 1px solid var(--line); box-shadow: var(--shadow); height: 470px; user-select: none; -webkit-user-select: none; font: 13px/1.38 -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif; }
+.mbar { height: 26px; display: flex; align-items: center; justify-content: space-between; padding: 0 10px; background: var(--desk-bar); color: var(--desk-fg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); font-size: 13px; position: relative; z-index: 3; }
+.mbar .l, .mbar .r { display: flex; align-items: center; gap: 16px; white-space: nowrap; overflow: hidden; }
+.mbar .l b { font-weight: 600; }
+.mbar .r svg { width: 15px; height: 15px; }
+.mbar .qicon { background: none; border: 0; color: inherit; padding: 2px 6px; border-radius: 4px; cursor: pointer; display: grid; place-items: center; }
+.mbar .qicon[aria-expanded="true"], .mbar .qicon:hover { background: rgb(127 127 127 / .3); }
+@media (max-width: 640px) { .mbar .l span.opt, .mbar .r .opt { display: none; } }
+.menu { position: absolute; z-index: 10; min-width: 260px; padding: 5px; border-radius: 8px; background: color-mix(in srgb, var(--w-bg) 92%, transparent); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid var(--w-line); box-shadow: 0 10px 40px rgb(0 0 0 / .35); color: var(--w-fg); font-size: 13px; }
+.menu[hidden] { display: none; }
+.menu .mi { display: flex; justify-content: space-between; gap: 18px; align-items: center; width: 100%; text-align: left; background: none; border: 0; color: inherit; font: inherit; padding: 3px 10px 3px 22px; border-radius: 4px; cursor: default; position: relative; text-decoration: none; }
+.menu .mi:not([aria-disabled="true"]):hover, .menu .mi:not([aria-disabled="true"]):focus-visible, .menu .mi.open { background: var(--w-acc); color: #fff; outline: none; }
+.menu .mi[aria-disabled="true"] { color: var(--w-fg2); }
+.menu .mi .ck { position: absolute; left: 7px; }
+.menu .mi kbd { font: inherit; opacity: .6; }
+.menu hr { border: 0; border-top: 1px solid var(--w-line); margin: 5px 8px; }
+.menu .sub { position: absolute; top: -6px; right: calc(-100% + 6px); min-width: 200px; }
+@media (max-width: 640px) { .menu .sub { right: 8px; top: 24px; } }
+.appwin { position: absolute; left: 50%; top: 48px; transform: translateX(-50%); width: min(580px, calc(100% - 28px)); height: 300px; border-radius: 11px; background: var(--w-bg); color: var(--w-fg); border: 1px solid var(--w-line); box-shadow: 0 20px 60px rgb(0 0 0 / .4); display: flex; flex-direction: column; overflow: hidden; }
+.appwin .tb { height: 36px; display: flex; align-items: center; gap: 8px; padding: 0 12px; border-bottom: 1px solid var(--w-line); flex: none; }
+.lights { display: flex; gap: 8px; flex: none; }
+.lights i { width: 12px; height: 12px; border-radius: 50%; background: #ff5f57; display: block; }
+.lights i:nth-child(2) { background: #febc2e; } .lights i:nth-child(3) { background: #28c840; }
+.appwin .tb .t { flex: 1; text-align: center; font-weight: 600; color: var(--w-fg2); margin-right: 52px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.appwin .bd { flex: 1; overflow: auto; padding: 14px 18px; white-space: pre-wrap; word-wrap: break-word; cursor: text; }
+.appwin .meta { color: var(--w-fg2); border-bottom: 1px solid var(--w-line); padding: 6px 18px; flex: none; }
+.appwin .ins { background: color-mix(in srgb, var(--w-acc) 28%, transparent); border-radius: 3px; transition: background 1.6s; }
+.appwin .ins.done { background: transparent; }
+.caret { display: inline-block; width: 1.5px; height: 1.15em; background: var(--w-acc); vertical-align: text-bottom; animation: blink 1.05s steps(1) infinite; margin-left: 1px; }
+@keyframes blink { 50% { opacity: 0; } }
+.chat { flex: 1; overflow: auto; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.bub { max-width: 75%; padding: 6px 11px; border-radius: 16px; background: var(--w-ctl); align-self: flex-start; white-space: pre-wrap; }
+.bub.me { align-self: flex-end; background: var(--w-acc); color: #fff; }
+.chatin { display: flex; gap: 8px; align-items: flex-end; padding: 8px 12px; border-top: 1px solid var(--w-line); flex: none; }
+.chatin .field { flex: 1; min-height: 28px; max-height: 80px; overflow: auto; border: 1px solid var(--w-line); border-radius: 14px; padding: 4px 12px; white-space: pre-wrap; background: var(--w-field); }
+.chatin .field .ph { color: var(--w-fg2); }
+.dock { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; padding: 6px; border-radius: 18px; background: var(--desk-bar); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgb(255 255 255 / .15); }
+.dock button { width: 46px; height: 46px; border-radius: 11px; border: 0; cursor: pointer; display: grid; place-items: center; position: relative; color: #fff; }
+.dock button svg { width: 24px; height: 24px; }
+.dock button[aria-pressed="true"]::after { content: ""; position: absolute; bottom: -5px; width: 4px; height: 4px; border-radius: 50%; background: var(--desk-fg); }
+.dock .notes { background: linear-gradient(#ffd85c, #f5b92e); color: #6b4a00; }
+.dock .msgs { background: linear-gradient(#5fe07a, #2fb54e); }
+.dock .mail { background: linear-gradient(#5ab0ff, #1f76e8); }
+.pillzone { position: absolute; left: 0; right: 0; bottom: 74px; display: flex; justify-content: center; pointer-events: none; z-index: 4; }
+.pill { pointer-events: auto; display: flex; align-items: center; gap: 8px; color: #fff; background: rgb(0 0 0 / .85); border: 1px solid rgb(255 255 255 / .2); border-radius: 999px; height: 36px; padding: 0 12px; font-size: 12px; font-weight: 500; transition: background .2s; }
+.pill.idle { width: 44px; height: 10px; padding: 0; background: rgb(0 0 0 / .55); border-color: rgb(255 255 255 / .25); cursor: pointer; }
+.pill.cmd { background: rgb(255 149 0 / .9); }
+.pill.err { background: rgb(191 51 51); }
+.pill.msg { height: 32px; padding: 0 14px; }
+.pill[hidden] { display: none; }
+.wave { display: flex; align-items: center; gap: 2px; height: 20px; }
+.wave i { width: 3px; border-radius: 2px; background: #fff; height: 3px; transition: height .08s linear; display: block; }
+.dots { display: flex; gap: 6px; padding: 0 6px; }
+.dots i { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: pulse .9s ease-in-out infinite alternate; display: block; }
+.dots i:nth-child(2) { animation-delay: .15s; } .dots i:nth-child(3) { animation-delay: .3s; }
+@keyframes pulse { from { opacity: .3; } to { opacity: 1; } }
+.rb { width: 20px; height: 20px; border-radius: 50%; border: 0; background: rgb(255 255 255 / .15); color: #fff; display: grid; place-items: center; cursor: pointer; padding: 0; }
+.rb svg { width: 10px; height: 10px; }
+.rb.stop { color: #ff453a; }
+.pmenu { bottom: 116px; left: 50%; transform: translateX(-50%); min-width: 170px; }
+
+.ctl { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 18px 28px; align-items: start; }
+@media (max-width: 760px) { .ctl { grid-template-columns: 1fr; } .talk { order: -1; } }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.chip { font: 500 14px var(--f-body); border: 1px solid var(--line); background: var(--bg-2); color: var(--fg-2); padding: 6px 13px; border-radius: 999px; cursor: pointer; }
+.chip[aria-pressed="true"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+.lbl { color: var(--fg-2); }
+.talk { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.talkbtn { display: inline-flex; align-items: center; gap: 10px; font: 600 16px var(--f-body); padding: 14px 26px; border-radius: 999px; border: 0; background: var(--fg); color: var(--bg); cursor: pointer; touch-action: none; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.talkbtn svg { width: 18px; height: 18px; }
+.talkbtn.on { background: var(--accent); }
+.said { margin-top: 18px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); display: grid; gap: 4px; min-height: 76px; }
+.said .w { font-family: var(--f-display); font-size: 21px; line-height: 1.35; }
+.said .w s { text-decoration: none; color: var(--fg-2); opacity: .45; }
+.segw { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; background: var(--bg-2); margin-top: 8px; }
+.segw button { font: 500 14px var(--f-body); border: 0; background: none; color: var(--fg-2); padding: 5px 13px; border-radius: 999px; cursor: pointer; }
+.segw button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+
+/* ---------- Hub replica ---------- */
+.mac { font: 13px/1.38 -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'Segoe UI', sans-serif; color: var(--w-fg); -webkit-font-smoothing: antialiased; }
+.hub { display: grid; grid-template-columns: 190px minmax(0, 1fr); height: 660px; border-radius: 12px; overflow: hidden; background: var(--w-bg); border: 1px solid var(--w-line); box-shadow: var(--shadow); position: relative; }
+.side { background: var(--w-side); border-right: 1px solid var(--w-line); padding: 14px 10px; overflow: auto; }
+.side .lights { margin: 0 0 18px 4px; }
+.side button { display: flex; align-items: center; gap: 8px; width: 100%; background: none; border: 0; color: var(--w-fg); font: inherit; padding: 5px 8px; border-radius: 6px; cursor: pointer; text-align: left; }
+.side button svg { width: 16px; height: 16px; color: var(--w-acc); flex: none; }
+.side button[aria-current="page"] { background: var(--w-sel); }
+.side button:hover:not([aria-current="page"]) { background: color-mix(in srgb, var(--w-sel) 50%, transparent); }
+.detail { overflow: auto; position: relative; scrollbar-width: thin; }
+@media (max-width: 760px) {
+  .hub { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); height: 620px; }
+  .side { display: flex; gap: 4px; overflow-x: auto; padding: 10px; border-right: 0; border-bottom: 1px solid var(--w-line); scrollbar-width: none; }
+  .side .lights { display: none; }
+  .side button { width: auto; white-space: nowrap; flex: none; }
+}
+.hd { padding: 20px; display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+.hd h4 { font-size: 22px; font-weight: 700; margin: 0; line-height: 1.2; }
+.hd p { color: var(--w-fg2); font-size: 13px; margin-top: 2px; }
+.cap { font-size: 11px; color: var(--w-fg2); }
+.sec2 { color: var(--w-fg2); }
+.form { padding: 0 20px 24px; }
+.form > .g + .g { margin-top: 18px; }
+.g > h5 { font-size: 13px; font-weight: 600; margin: 0 0 6px 10px; }
+.rows { background: var(--w-row); border: 1px solid var(--w-line); border-radius: 8px; }
+.r { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px; min-height: 36px; flex-wrap: wrap; }
+.r > .grow { flex: 1; min-width: 0; }
+.r.col { flex-direction: column; align-items: stretch; }
+.r + .r { border-top: 1px solid var(--w-line); }
+.r.top { align-items: flex-start; }
+.b { font: inherit; color: var(--w-fg); background: var(--w-ctl); border: 0; border-radius: 6px; padding: 3px 10px; cursor: pointer; white-space: nowrap; box-shadow: 0 .5px 1px rgb(0 0 0 / .15); }
+:root[data-theme="light"] .b { background: #fff; box-shadow: 0 0 0 .5px rgb(0 0 0 / .15), 0 1px 1px rgb(0 0 0 / .08); }
+.b:hover { filter: brightness(1.12); }
+.b:disabled { opacity: .45; cursor: default; filter: none; }
+.b.pri { background: var(--w-acc); color: #fff; }
+.b.danger { color: var(--w-red); }
+.lk { font: inherit; background: none; border: 0; color: var(--w-acc); padding: 0; cursor: pointer; text-decoration: none; }
+.lk.s { font-size: 11px; }
+.lk:hover { text-decoration: underline; }
+.ib { background: none; border: 0; color: var(--w-fg2); cursor: pointer; padding: 2px; display: grid; place-items: center; border-radius: 4px; }
+.ib svg { width: 14px; height: 14px; }
+.ib:hover { color: var(--w-fg); }
+.ib.star-on { color: var(--w-yellow); }
+.ib.star-on svg { fill: currentColor; }
+.tg { width: 32px; height: 19px; border-radius: 10px; background: var(--w-ctl); border: 0; position: relative; cursor: pointer; flex: none; padding: 0; transition: background .2s; }
+:root[data-theme="light"] .tg { background: rgb(0 0 0 / .12); }
+.tg::after { content: ""; position: absolute; top: 2px; left: 2px; width: 15px; height: 15px; border-radius: 50%; background: var(--w-knob); box-shadow: 0 1px 2px rgb(0 0 0 / .3); transition: transform .2s; }
+.tg[aria-checked="true"] { background: var(--w-acc); }
+:root[data-theme="light"] .tg[aria-checked="true"] { background: var(--w-acc); }
+.tg[aria-checked="true"]::after { transform: translateX(13px); }
+.tg:disabled { opacity: .4; }
+.pop { font: inherit; color: var(--w-fg); background-color: var(--w-ctl); border: 0; border-radius: 6px; padding: 3px 24px 3px 9px; appearance: none; -webkit-appearance: none; cursor: pointer; max-width: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 14'%3E%3Cpath d='M2 5l3-3l3 3M2 9l3 3l3-3' fill='none' stroke='%23999' stroke-width='1.5'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 7px center; background-size: 8px 12px; }
+:root[data-theme="light"] .pop { background-color: #fff; box-shadow: 0 0 0 .5px rgb(0 0 0 / .15), 0 1px 1px rgb(0 0 0 / .08); }
+.pop option { color: #111; background: #fff; }
+.seg { display: inline-flex; background: var(--w-ctl); border-radius: 7px; padding: 2px; gap: 2px; flex-wrap: wrap; }
+.seg button { font: inherit; color: var(--w-fg); background: none; border: 0; padding: 2px 12px; border-radius: 5px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--w-ctl-on); box-shadow: 0 1px 2px rgb(0 0 0 / .2); }
+.tf { font: inherit; color: var(--w-fg); background: var(--w-field); border: 1px solid var(--w-line); border-radius: 6px; padding: 4px 8px; width: 100%; min-width: 0; }
+.tf:focus { outline: 3px solid color-mix(in srgb, var(--w-acc) 45%, transparent); outline-offset: 0; border-color: var(--w-acc); }
+textarea.tf { resize: vertical; min-height: 60px; font: inherit; }
+.ta-ro { color: var(--w-fg2); }
+.pb { height: 6px; border-radius: 3px; background: var(--w-ctl); overflow: hidden; width: 100%; }
+.pb i { display: block; height: 100%; background: var(--w-acc); width: 0; transition: width .25s linear; }
+.chk { width: 16px; height: 16px; flex: none; }
+.ok { color: var(--w-green); } .warn { color: var(--w-orange); } .bad { color: var(--w-red); }
+.radio { width: 15px; height: 15px; border-radius: 50%; border: 1.5px solid var(--w-fg2); flex: none; margin-top: 1px; display: grid; place-items: center; }
+.radio.on { border: 0; background: var(--w-acc); }
+.radio.on::after { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+.badge { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 999px; background: color-mix(in srgb, var(--w-acc) 18%, transparent); }
+.tagl { font-size: 10px; padding: 0 5px; border-radius: 999px; background: color-mix(in srgb, var(--w-acc) 16%, transparent); }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 12px; }
+.fc { background: var(--w-card); border-radius: 10px; padding: 12px; min-height: 120px; display: grid; gap: 6px; align-content: start; }
+.fc .t { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; }
+.fc .t svg { width: 16px; height: 16px; color: var(--w-orange); flex: none; }
+.fc .t .lk { margin-left: auto; font-weight: 400; }
+.fc p { font-size: 12.5px; }
+.gt { font-size: 15px; font-weight: 700; margin: 0 0 8px; }
+.grid2 { display: grid; grid-template-columns: max-content 1fr; gap: 4px 24px; font-size: 12.5px; }
+.grid2 kbd { font: 12px ui-monospace, 'SF Mono', Menlo, monospace; }
+.hist { padding: 0 20px 20px; }
+.hrow { padding: 10px 0; border-bottom: 1px solid var(--w-line); display: grid; gap: 6px; }
+.hrow .m { display: flex; gap: 6px; font-size: 11px; color: var(--w-fg2); flex-wrap: wrap; }
+.hrow .m .ms { margin-left: auto; font-variant-numeric: tabular-nums; }
+.hrow .tx { white-space: pre-wrap; }
+.hrow .ac { display: flex; gap: 12px; font-size: 11px; flex-wrap: wrap; }
+.hrow .ac .lk:last-child { margin-left: auto; }
+.new-row { animation: flash 1.8s ease-out; }
+@keyframes flash { from { background: color-mix(in srgb, var(--w-acc) 22%, transparent); } to { background: transparent; } }
+.empty { display: grid; place-items: center; text-align: center; padding: 70px 20px; color: var(--w-fg2); gap: 6px; }
+.empty svg { width: 34px; height: 34px; }
+.empty b { color: var(--w-fg); font-size: 17px; }
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+@media (max-width: 760px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tile { background: var(--w-card); border-radius: 10px; padding: 12px; }
+.tile b { display: block; font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.heat { display: flex; gap: 3px; overflow-x: auto; padding-bottom: 2px; }
+.heat div { display: grid; gap: 3px; }
+.heat i { width: 12px; height: 12px; border-radius: 2px; display: block; }
+.bars { display: grid; gap: 6px; }
+.bars .br { display: grid; grid-template-columns: 120px minmax(0, 1fr) 60px; gap: 8px; align-items: center; }
+.bars .br span:last-child { text-align: right; font-size: 11px; font-variant-numeric: tabular-nums; }
+.bars .br em { display: block; height: 12px; border-radius: 3px; background: var(--w-acc); }
+.mt { display: grid; grid-template-columns: 220px minmax(0, 1fr); border-top: 1px solid var(--w-line); min-height: 380px; }
+@media (max-width: 760px) { .mt { grid-template-columns: 1fr; } .mt .ml { border-right: 0 !important; border-bottom: 1px solid var(--w-line); } }
+.ml { border-right: 1px solid var(--w-line); padding: 6px; }
+.ml button { display: grid; gap: 2px; width: 100%; text-align: left; background: none; border: 0; color: var(--w-fg); font: inherit; padding: 6px 8px; border-radius: 6px; cursor: pointer; }
+.ml button[aria-current="true"] { background: var(--w-sel); }
+.md { padding: 20px; display: grid; gap: 10px; align-content: start; }
+.md h6 { font-size: 15px; margin: 6px 0 0; }
+.md ul { margin: 0; padding-left: 18px; display: grid; gap: 2px; }
+.md ul.todo { list-style: none; padding-left: 0; }
+.md ul.todo li::before { content: "☐  "; }
+.trs { display: grid; grid-template-columns: 48px 56px minmax(0, 1fr); gap: 4px 6px; }
+.trs .ts { font-size: 11px; color: var(--w-fg2); font-variant-numeric: tabular-nums; padding-top: 1px; }
+.answer { margin: 8px 20px 0; padding: 12px; border-radius: 8px; background: color-mix(in srgb, var(--w-acc) 9%, transparent); }
+.toast { position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%) translateY(20px); opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; background: rgb(20 20 20 / .92); color: #fff; padding: 8px 14px; border-radius: 8px; font-size: 12.5px; max-width: calc(100% - 32px); z-index: 30; text-align: center; }
+.toast.on { opacity: 1; transform: translateX(-50%); }
+.spin { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--w-ctl); border-top-color: var(--w-fg2); animation: rot .8s linear infinite; display: inline-block; vertical-align: middle; }
+@keyframes rot { to { transform: rotate(360deg); } }
+.lab { display: grid; grid-template-columns: repeat(5, auto); gap: 4px 16px; font-size: 12.5px; justify-content: start; }
+.labrow { display: grid; grid-template-columns: 14px 150px minmax(0, 1fr) auto; gap: 6px; align-items: start; font-size: 12.5px; }
+@media (max-width: 760px) { .lab { grid-template-columns: repeat(3, auto); } .labrow { grid-template-columns: 14px minmax(0, 1fr) auto; } .labrow > b { grid-column: 2 / -1; } }
+code.cfg { font: 11px ui-monospace, 'SF Mono', Menlo, monospace; word-break: break-all; }
+.explain { display: grid; gap: 8px; font-size: 12.5px; }
+.explain .h { display: flex; gap: 6px; align-items: center; font-weight: 600; font-size: 13px; }
+.explain .h svg { width: 15px; height: 15px; }
+
+/* ---------- install ---------- */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 16px; counter-reset: s; }
+.steps li { border: 1px solid var(--line); background: var(--bg-2); border-radius: 16px; padding: 20px; counter-increment: s; display: grid; gap: 8px; align-content: start; }
+.steps li::before { content: counter(s); font-family: var(--f-mono); font-size: 12px; color: var(--accent); }
+.steps h3 { font-size: 22px; }
+.steps p { color: var(--fg-2); font-size: 15px; }
+.why { margin-top: 22px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; }
+@media (max-width: 820px) { .why { grid-template-columns: 1fr; } }
+.why > div { border: 1px solid var(--line); border-radius: 16px; padding: 22px; }
+.why h3 { font-size: 22px; margin-bottom: 10px; }
+.why p, .why li { color: var(--fg-2); font-size: 15px; }
+.why ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.why strong { color: var(--fg); font-weight: 500; }
+footer { margin-top: clamp(56px, 8vw, 96px); padding-block: 26px 40px; color: var(--fg-2); font-size: 13px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="mark" href="/" aria-label="Arian Shafa, home"><i></i>Arian Shafa</a>
+    <div class="links">
+      <a href="#try">Try it</a>
+      <a href="#app">The app</a>
+      <a href="#install" class="opt">Install</a>
+      <a href="https://github.com/weareaiforfun-hub/quoth" target="_blank" rel="noopener noreferrer" class="opt">GitHub ↗</a>
+      <button class="toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Free Mac app · open source</p>
+    <h1>Quoth</h1>
+    <p class="lede">Hold a key, <em>talk</em>, and tidy text appears wherever you're typing.</p>
+    <p class="bio">Quoth turns your speech into clean text in any app: email, chat, notes. It removes the “um”s, applies your corrections (“two, actually three” becomes 3) and adds the punctuation. Everything runs on your own Mac, so nothing you say goes online. It's free, and anyone can read its code.</p>
+    <div class="actions">
+      <a class="btn primary" data-dl="hero" href="https://github.com/weareaiforfun-hub/quoth/releases/latest/download/Quoth.dmg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5l5-5M5 20h14"/></svg>Download for Mac</a>
+      <a class="btn" href="#try">Try it in your browser</a>
+      <a class="btn" href="https://github.com/weareaiforfun-hub/quoth" target="_blank" rel="noopener noreferrer">View the code ↗</a>
+    </div>
+    <p class="req mono">Apple Silicon Mac (M1 or later) · macOS 14 or later · version 0.4.1</p>
+  </div>
+</header>
+
+<main>
+<section class="block" id="try" aria-labelledby="try-h">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Try it</p>
+      <h2 id="try-h">Hold, talk, let go</h2>
+      <p class="sub">Hold the button below (or the space bar) while the sentence plays, then let go. Quoth tidies it up and types it into the app in front. Switch apps in the dock: the style follows the app.</p>
+      <p class="note-demo">This is a demo with prepared sentences. It doesn't use your microphone, and nothing leaves this page.</p>
+    </div>
+
+    <div class="desk mac" id="desk">
+      <div class="mbar">
+        <div class="l"><b id="app-name">Notes</b><span class="opt">File</span><span class="opt">Edit</span><span class="opt">Format</span><span class="opt">View</span><span class="opt">Window</span></div>
+        <div class="r">
+          <button class="qicon" id="qicon" type="button" aria-label="Quoth menu" aria-haspopup="menu" aria-expanded="false"></button>
+          <span class="opt" data-ic="wifi" aria-hidden="true"></span>
+          <span id="clock"></span>
+        </div>
+      </div>
+      <div class="menu" id="qmenu" role="menu" hidden></div>
+      <div class="appwin" id="appwin" aria-live="polite"></div>
+      <div class="pillzone"><div class="pill idle" id="pill" role="status" aria-label="Quoth is idle"></div></div>
+      <div class="menu pmenu" id="pmenu" role="menu" hidden>
+        <button class="mi" role="menuitem" data-pm="open">Open Quoth</button>
+        <button class="mi" role="menuitem" data-pm="hide">Hide for 1 hour</button>
+      </div>
+      <div class="dock" role="group" aria-label="Apps">
+        <button class="notes" type="button" data-app="notes" aria-label="Notes" aria-pressed="true"></button>
+        <button class="msgs" type="button" data-app="messages" aria-label="Messages" aria-pressed="false"></button>
+        <button class="mail" type="button" data-app="mail" aria-label="Mail" aria-pressed="false"></button>
+      </div>
+    </div>
+
+    <div class="ctl">
+      <div>
+        <span class="lbl mono">What to say</span>
+        <div class="chips" id="chips" role="group" aria-label="Example sentences"></div>
+        <div class="said" aria-live="polite"><span class="lbl mono" id="said-l">You'll say</span><span class="w" id="said"></span></div>
+      </div>
+      <div class="talk">
+        <button class="talkbtn" id="talk" type="button"><span data-ic="mic"></span><span id="talk-l">Hold to talk</span></button>
+        <span class="lbl mono" id="talk-hint">or hold the space bar · double-tap for hands-free</span>
+        <span class="lbl mono" style="margin-top:10px">Auto Cleanup</span>
+        <div class="segw" id="lvl" role="group" aria-label="Auto Cleanup level">
+          <button type="button" data-lvl="none">None</button><button type="button" data-lvl="light">Light</button><button type="button" data-lvl="medium">Medium</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="app" aria-labelledby="app-h">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">The app</p>
+      <h2 id="app-h">Look around Quoth</h2>
+      <p class="sub">This is a clickable copy of Quoth's main window, filled with example data. Change settings, add words to the dictionary, pick a style: your dictations from the demo above show up in History, and your dictionary and style changes apply to them.</p>
+      <p class="note-demo">Everything you change here stays in this page and is gone when you reload.</p>
+    </div>
+    <div class="hub mac" id="hub">
+      <nav class="side" id="side" aria-label="Quoth sections"><div class="lights" aria-hidden="true"><i></i><i></i><i></i></div></nav>
+      <div class="detail" id="detail" tabindex="-1"></div>
+      <div class="toast" id="toast" role="status"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="install" aria-labelledby="install-h">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Install</p>
+      <h2 id="install-h">Ready in about ten minutes</h2>
+      <p class="sub">No Terminal, no technical knowledge. The <a href="https://github.com/weareaiforfun-hub/quoth/blob/main/docs/install.md" target="_blank" rel="noopener noreferrer">step-by-step guide</a> walks you through every screen.</p>
+    </div>
+    <ol class="steps">
+      <li><h3>Download</h3><p><a data-dl="steps" href="https://github.com/weareaiforfun-hub/quoth/releases/latest/download/Quoth.dmg">Quoth.dmg</a> (about 15 MB). Open it and drag Quoth into Applications.</p></li>
+      <li><h3>Allow it once</h3><p>macOS blocks Quoth the first time. Click Done, then System Settings → Privacy &amp; Security → <strong>Open Anyway</strong>.</p></li>
+      <li><h3>Get the models</h3><p>Quoth picks the right size for your Mac (3 to 10 GB) and downloads it in the background.</p></li>
+      <li><h3>Three permissions</h3><p>Microphone, Accessibility and Input Monitoring. Then hold Fn and talk.</p></li>
+    </ol>
+    <div class="why">
+      <div>
+        <h3>Why the extra step?</h3>
+        <p>Apple charges developers €99 every year before macOS opens their apps without asking. Quoth is free and I don't earn anything from it, so I publish it without paying that fee. The only cost is one extra click for you, the first time.</p>
+      </div>
+      <div>
+        <h3>Is it safe?</h3>
+        <ul>
+          <li><strong>Open source:</strong> anyone can read all of its code on <a href="https://github.com/weareaiforfun-hub/quoth" target="_blank" rel="noopener noreferrer">GitHub</a>.</li>
+          <li><strong>Signed:</strong> every release and every update carries the same signature.</li>
+          <li><strong>Private:</strong> it works offline and sends nothing anywhere, unless you choose a cloud service yourself.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="actions">
+      <a class="btn primary" data-dl="install" href="https://github.com/weareaiforfun-hub/quoth/releases/latest/download/Quoth.dmg">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 4v11M7 10l5 5l5-5M5 20h14"/></svg>Download for Mac</a>
+      <a class="btn" href="https://github.com/weareaiforfun-hub/quoth/blob/main/docs/install.md" target="_blank" rel="noopener noreferrer">Read the install guide ↗</a>
+      <a class="btn" href="mailto:arian.shafa.analytics@gmail.com?subject=Quoth%20question">Ask me a question</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<div class="wrap"><footer><span>© 2026 Arian Shafa · Quoth is open source (MIT licence)</span><a class="mono" href="/" style="text-decoration:none">arian-shafa.xyz</a></footer></div>
+
+<noscript><p class="wrap" style="color:var(--fg-2)">The demo and the app tour need JavaScript.</p></noscript>
+
+<script>
+(function () {
+  'use strict';
+  // ---------- helpers ----------
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  const T = (name, data) => { try { window.umami && window.umami.track(name, data); } catch (e) {} };
+  const P = {
+    grid: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z', clock: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 7v5l3 2',
+    chart: 'M5 20V11M10 20V5M15 20v-7M20 20V9', people: 'M8.5 11a3 3 0 1 0 0-6a3 3 0 1 0 0 6M3 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5M16 5.5a2.7 2.7 0 1 1 0 5.4M17.5 14c2.2.5 3.5 2.3 3.5 5',
+    book: 'M4 5.5C4 4.7 4.7 4 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5c0-.8-.7-1.5-1.5-1.5H13v15h5.5c.8 0 1.5.7 1.5 1.5z',
+    textplus: 'M4 6h12M4 11h12M4 16h7M17 14v6M14 17h6', textformat: 'M3 18L8 6l5 12M4.7 14h6.6M15 12.5a2.5 2.5 0 0 1 5 0V18M20 15.5h-2.5a2.5 2.5 0 0 0 0 5',
+    wand: 'M4 20L15 9M17 3v3M15.5 4.5h3M20 8v3M18.5 9.5h3M11 3v2M10 4h2', cpu: 'M7 7h10v10H7zM10 10h4v4h-4zM9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4',
+    gear: 'M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9L7 7M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1',
+    shield: 'M12 3l7 3v5c0 4.5-3 8.5-7 10c-4-1.5-7-5.5-7-10V6zM9 12l2 2l4-4', mic: 'M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3M6 11a6 6 0 0 0 12 0M12 17v4',
+    hand: 'M8 13V6a1.5 1.5 0 0 1 3 0v5M11 11V4.5a1.5 1.5 0 0 1 3 0V11M14 11V6a1.5 1.5 0 0 1 3 0v7c0 4-2.5 7-6 7c-2.5 0-4-1.5-5.5-3.5L4 14a1.5 1.5 0 0 1 2.5-1.5L8 14',
+    sparkles: 'M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z',
+    clip: 'M9 4h6v3H9zM8 5.5H6v15h12v-15h-2', mouse: 'M12 3a6 6 0 0 0-6 6v6a6 6 0 0 0 12 0V9a6 6 0 0 0-6-6M12 7v4',
+    globe: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M3 12h18M12 3c2.5 2.7 3.5 5.7 3.5 9s-1 6.3-3.5 9c-2.5-2.7-3.5-5.7-3.5-9s1-6.3 3.5-9',
+    cursor: 'M8 4h3M8 20h3M9.5 4v16M14 8h6M14 12h6M14 16h4',
+    command: 'M9 9h6v6H9zM9 9V6.5a2.5 2.5 0 1 0-2.5 2.5H9M15 9V6.5a2.5 2.5 0 1 1 2.5 2.5H15M9 15v2.5a2.5 2.5 0 1 1-2.5-2.5H9M15 15v2.5a2.5 2.5 0 1 0 2.5-2.5H15',
+    code: 'M8 7l-5 5l5 5M16 7l5 5l-5 5M14 4l-4 16', note: 'M5 4h14v16H5zM8 9h8M8 13h8M8 17h5',
+    link: 'M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1',
+    star: 'M12 3.5l2.6 5.3l5.9.9l-4.3 4.1l1 5.8L12 16.9l-5.2 2.7l1-5.8l-4.3-4.1l5.9-.9z', trash: 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13',
+    arrow: 'M4 12h15M14 7l5 5l-5 5', info: 'M12 3a9 9 0 1 0 0 18a9 9 0 1 0 0-18M12 11v5M12 8h.01', wave: 'M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2',
+    cloud: 'M7 18a4 4 0 0 1-.5-8a5.5 5.5 0 0 1 10.6-1.5A4.5 4.5 0 0 1 17.5 18z', up: 'M6 15l6-6l6 6', down: 'M6 9l6 6l6-6',
+    x: 'M6 6l12 12M18 6L6 18', check: 'M5 12.5l4.5 4.5L19 7', stop: 'M7 7h10v10H7z',
+    wifi: 'M2.5 9a14 14 0 0 1 19 0M5.5 12.5a9.5 9.5 0 0 1 13 0M8.7 15.8a5 5 0 0 1 6.6 0M12 19h.01',
+    mail: 'M3 6h18v12H3zM3 7l9 6l9-6', bubble: 'M4 5h16v11H9l-5 4z', lines: 'M6 7h12M6 11h12M6 15h8'
+  };
+  const ic = (n, sw = 1.7) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${P[n]}"/></svg>`;
+  const circleOK = `<svg class="chk ok" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const circleNo = `<svg class="chk sec2" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>`;
+  document.querySelectorAll('[data-ic]').forEach(el => { el.innerHTML = ic(el.dataset.ic, el.dataset.ic === 'wifi' ? 2 : 1.9); el.style.display = 'inline-grid'; });
+
+  // ---------- theme (shared with the homepage) ----------
+  const root = document.documentElement, tbtn = $('#theme-toggle');
+  const applyTheme = t => { root.setAttribute('data-theme', t); tbtn.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'); };
+  let saved = null; try { saved = localStorage.getItem('as-theme'); } catch (e) {}
+  applyTheme(saved === 'light' ? 'light' : 'dark');
+  tbtn.addEventListener('click', () => { const t = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'; applyTheme(t); try { localStorage.setItem('as-theme', t); } catch (e) {} });
+
+  // ---------- shared state (the app's settings and data, with example values) ----------
+  const HOTKEYS = { fn: 'Fn (🌐)', rightOption: 'Right Option', rightCommand: 'Right Command' };
+  const TONES = { formal: 'Formal', casual: 'Casual', veryCasual: 'Very casual', excited: 'Excited' };
+  const TONE_EX = {
+    formal: "Hey, are you free for lunch tomorrow? Let's do 12 if that works for you.",
+    casual: "Hey are you free for lunch tomorrow? Let's do 12 if that works for you",
+    veryCasual: "hey are you free for lunch tomorrow? let's do 12 if that works for you",
+    excited: "Hey, are you free for lunch tomorrow? Let's do 12 if that works for you!"
+  };
+  const CATS = [['personal', 'Personal messages', ['formal', 'casual', 'veryCasual', 'excited']], ['work', 'Work messages', ['formal', 'casual', 'excited']],
+    ['email', 'Email', ['formal', 'casual', 'excited']], ['other', 'Everything else', ['formal', 'casual']]];
+  const now = Date.now(), MIN = 60000, DAY = 86400000;
+  let uid = 100;
+  const S = {
+    section: 'features',
+    set: { hotkey: 'fn', handsFree: true, cleanup: 'light', languages: [], variant: 'Default', sounds: true, llmLocal: 3, llmCloud: 2,
+      command: true, cmdModel: '', scratch: true, mouseDict: 'Off', mouseEnter: 'Off', mcp: false, pillAlways: true, pillHide: false,
+      retention: 'Keep (audio for 14 days)', autoUpdate: true, autoInstall: false, context: true, transformKeys: true, autoTransform: 'Off',
+      speechRun: 'local', textRun: 'builtin' },
+    mics: [{ n: 'MacBook Pro Microphone' }, { n: 'AirPods Pro' }, { n: 'Studio Display Microphone' }, { n: 'Microsoft Teams Audio', v: true }],
+    styles: { personal: 'casual', work: 'casual', email: 'formal', other: 'formal' },
+    autoLearn: true,
+    dict: [
+      { id: 1, kind: 'word', phrase: 'Kubernetes', star: true, uses: 12 },
+      { id: 2, kind: 'word', phrase: 'Quoth', star: true, uses: 31 },
+      { id: 3, kind: 'word', phrase: 'Schiphol', learned: true, uses: 3 },
+      { id: 4, kind: 'word', phrase: 'Umami', uses: 5 },
+      { id: 5, kind: 'rep', phrase: 'the repo', rep: 'github.com/weareaiforfun-hub/quoth', uses: 4 },
+      { id: 6, kind: 'rep', phrase: 'okay', rep: 'OK', uses: 9 }
+    ],
+    snippets: [
+      { id: 1, trigger: 'my calendar link', exp: 'You can book a time that suits you here: https://cal.example.com/me' },
+      { id: 2, trigger: 'sign off', exp: 'Best,\nArian' }
+    ],
+    polish: { concise: true, clarity: true, reorder: false, structure: false, tone: true, main: false, impact: false, custom: [] },
+    transforms: [{ id: 1, name: 'Friendly Slack', instr: 'Rewrite as a friendly, short Slack message.', samples: [] }],
+    history: [
+      { id: 1, at: now - 18 * MIN, app: 'Mail', dur: 6.2, ms: 1240, raw: "Hi Lena, uh, quick update, the the report is done and I'll send it after lunch.", final: "Hi Lena, quick update: the report is done and I'll send it after lunch." },
+      { id: 2, at: now - 52 * MIN, app: 'Slack', dur: 4.1, ms: 910, raw: "Can we move the stand-up to 10, no, 10:30 tomorrow?", final: "Can we move the stand-up to 10:30 tomorrow?" },
+      { id: 3, at: now - 2.4 * 60 * MIN, app: 'Notes', dur: 7.8, ms: 1380, raw: "Ideas for the weekend, one, the Rijksmuseum, two, a bike ride to Zaandam, three, pancakes.", final: "Ideas for the weekend:\n1. The Rijksmuseum\n2. A bike ride to Zaandam\n3. Pancakes" },
+      { id: 4, at: now - DAY - 3 * 60 * MIN, app: 'Cursor', dur: 3.5, ms: 820, raw: "Rename the function to fetch user stats and add a test for index dot ts.", final: "Rename the function to fetchUserStats and add a test for @index.ts." },
+      { id: 5, at: now - DAY - 5 * 60 * MIN, app: 'Messages', dur: 2.2, empty: true },
+      { id: 6, at: now - 2 * DAY, app: 'WhatsApp', dur: 3.0, ms: 760, raw: "Haha yes, um, see you at eight!", final: "Haha yes, see you at 8!" }
+    ],
+    showRaw: new Set(),
+    meetings: [
+      { id: 'm1', title: 'Weekly product sync', at: now - DAY, min: 34,
+        notes: [['h', 'Summary'], ['p', 'The team agreed to ship the new onboarding next Tuesday and to collect feedback from five beta testers first.'],
+          ['h', 'Decisions'], ['li', 'Onboarding ships on Tuesday.'], ['li', 'Keep the free plan; no paywall for now.'],
+          ['h', 'Action items'], ['todo', 'Me: send the beta invite by Friday.'], ['todo', 'Lena: update the install guide screenshots.'], ['todo', 'Sam: check the 8 GB model speed.']],
+        tr: [['00:12', 'Me', "OK, let's start with onboarding. Where are we?"], ['00:19', 'Lena', "Design is done. I'd like a few testers first."], ['00:31', 'Sam', 'Five people should be enough to find the big problems.'],
+          ['01:05', 'Me', "Then we ship on Tuesday and keep the free plan as it is."], ['01:14', 'Lena', "I'll update the screenshots in the guide."]] },
+      { id: 'm2', title: 'Call with the design agency', at: now - 4 * DAY, min: 22,
+        notes: [['h', 'Summary'], ['p', 'The agency presented two directions for the new logo. Direction B (the quill) was preferred.'],
+          ['h', 'Decisions'], ['li', 'Go with direction B.'], ['h', 'Action items'], ['todo', 'Agency: final files by 3 November.'], ['todo', 'Me: share the brand colours.']],
+        tr: [['00:08', 'Them', 'We have two directions to show you today.'], ['02:40', 'Me', 'B feels much more like Quoth.'], ['03:02', 'Them', 'Great, we will send the final files by the 3rd.']] }
+    ],
+    meetingSel: 'm1', meetingTr: false, recording: false, answer: null,
+    perms: { mic: false, ax: false, im: false, screen: false },
+    setup: { bundle: 'standard', phase: 'choose', p: [0, 0], timer: null },
+    speechModel: 'ggml-large-v3-turbo-q5_0.bin', textModel: 'Qwen2.5-14B-Instruct-Q4_K_M.gguf',
+    installed: new Set(['ggml-large-v3-turbo-q5_0.bin', 'ggml-small.bin', 'Qwen2.5-14B-Instruct-Q4_K_M.gguf']),
+    dl: {}, lab: { kind: 0, picked: new Set(), quick: true, recent: true, running: false, done: false },
+    profile: null, profiling: false, dictFilter: '', err: { dict: null, snip: null }
+  };
+  const hk = () => HOTKEYS[S.set.hotkey];
+
+  const SPEECH = [
+    ['ggml-tiny.bin', 'Whisper Tiny', 77, 'Fastest, least accurate. Fine for quick English notes on older Macs.'],
+    ['ggml-base.bin', 'Whisper Base', 147, 'Very fast; misses names and noisy speech more often.'],
+    ['ggml-small.bin', 'Whisper Small', 487, 'Good balance on 8 GB Macs.'],
+    ['ggml-small.en.bin', 'Whisper Small (English)', 487, 'English only, slightly better than Small for English.'],
+    ['ggml-medium-q5_0.bin', 'Whisper Medium', 539, 'More accurate, noticeably slower than Large v3 Turbo.'],
+    ['ggml-large-v3-turbo-q5_0.bin', 'Whisper Large v3 Turbo (default)', 574, 'Recommended: near-best accuracy at high speed, 100 languages.'],
+    ['ggml-large-v3-turbo.bin', 'Whisper Large v3 Turbo (full precision)', 1624, 'Same model without quantisation; marginally more accurate, 3× the size.'],
+    ['ggml-large-v3-q5_0.bin', 'Whisper Large v3', 1081, 'Most accurate; about 3× slower than Turbo.']
+  ];
+  const GGUF = [
+    ['Qwen2.5-14B-Instruct-Q4_K_M.gguf', 'Qwen 2.5 14B', 9.0, 13, 'Best tested accuracy. For Macs with 32 GB or more.'],
+    ['Qwen2.5-7B-Instruct-Q4_K_M.gguf', 'Qwen 2.5 7B', 4.7, 6, 'About twice as fast; sometimes answers questions or garbles corrections. Good for 16 GB Macs.'],
+    ['Qwen_Qwen3-4B-Instruct-2507-Q4_K_M.gguf', 'Qwen 3 4B', 2.5, 4, 'Small and quick for 8 GB Macs; weaker cleanup than the larger models.']
+  ];
+  const OLLAMA = [
+    ['Qwen 2.5 14B (default)', 9.0, 12, 'Apache-2.0', "Best tested accuracy: 0 serious failures on Quoth's 66-case test set, ~0.8 s per sentence on an M1 Max."],
+    ['Qwen 2.5 7B', 4.7, 7, 'Apache-2.0', 'About twice as fast; sometimes answers questions or garbles corrections. Good for 16 GB Macs.'],
+    ['Qwen 3 8B', 5.2, 8, 'Apache-2.0', 'Newer generation; run with thinking off (Quoth does this automatically).'],
+    ['Llama 3.2 3B', 2.0, 4, 'Llama 3.2 Community', "Meta's small model; quick, English-focused."],
+    ['Gemma 3 12B', 8.1, 11, 'Gemma Terms of Use', "Accurate on corrections in our tests but ~7 s per sentence (can't reuse the prompt cache). Better for meetings than dictation."],
+    ['Mistral Small 24B', 14, 18, 'Apache-2.0', 'Strong writer for Commands, Transforms and meeting notes on 32 GB+ Macs.']
+  ];
+  const BUNDLES = {
+    lite: ['Lite', 8, '3.0 GB', 'Whisper Small + Qwen 3 4B. Quick and small. Cleanup is simpler and makes more mistakes.', [0.49, 2.5]],
+    standard: ['Standard', 16, '5.3 GB', 'Whisper Large v3 Turbo + Qwen 2.5 7B. Accurate speech, good cleanup, about twice as fast as Best.', [0.57, 4.7]],
+    best: ['Best', 32, '9.6 GB', 'Whisper Large v3 Turbo + Qwen 2.5 14B. Most accurate cleanup: corrections, lists and questions handled best.', [0.57, 9.0]]
+  };
+
+  // ---------- try-it demo ----------
+  const SCEN = [
+    { id: 'meet', label: 'Meeting time', app: 'notes', spoken: "um so let's meet at two, actually three, on thursday",
+      none: "Um, so let's meet at two, actually three, on Thursday.", light: "So let's meet at 3 on Thursday.", medium: "Let's meet at 3 on Thursday." },
+    { id: 'list', label: 'Shopping list', app: 'notes', spoken: 'for the groceries I need, one, oat milk, two, eggs, three, coffee beans',
+      none: 'For the groceries I need, one, oat milk, two, eggs, three, coffee beans.', light: 'For the groceries I need:\n1. Oat milk\n2. Eggs\n3. Coffee beans', medium: 'Groceries:\n1. Oat milk\n2. Eggs\n3. Coffee beans' },
+    { id: 'late', label: 'Running late', app: 'messages', spoken: "hey I'm running like ten minutes late, sorry",
+      none: "Hey, I'm running like 10 minutes late, sorry.", light: "Hey, I'm running 10 minutes late, sorry.", medium: "Hey, I'm running about 10 minutes late, sorry." },
+    { id: 'email', label: 'Email reply', app: 'mail', spoken: "hi sam comma thanks for sending the slides uh I'll go through them tonight and get back to you tomorrow new paragraph best comma arian",
+      none: "Hi Sam, thanks for sending the slides, uh, I'll go through them tonight and get back to you tomorrow.\n\nBest, Arian",
+      light: "Hi Sam,\n\nThanks for sending the slides. I'll go through them tonight and get back to you tomorrow.\n\nBest,\nArian",
+      medium: "Hi Sam,\n\nThanks for the slides. I'll review them tonight and get back to you tomorrow.\n\nBest,\nArian" },
+    { id: 'q', label: 'A question', app: 'notes', spoken: 'uh what time does the uh the train to utrecht leave',
+      none: 'Uh, what time does the, uh, the train to Utrecht leave?', light: 'What time does the train to Utrecht leave?', medium: 'What time does the train to Utrecht leave?',
+      after: 'Quoth types your question. It never answers it.' }
+  ];
+  const APPS = {
+    notes: { name: 'Notes', cat: 'other', title: 'Monday', buf: '' },
+    messages: { name: 'Messages', cat: 'personal', title: 'Sam', buf: '', chat: [{ me: false, t: 'Are you still coming tonight?' }] },
+    mail: { name: 'Mail', cat: 'email', title: 'Re: Slides for Thursday', buf: '' }
+  };
+  let app = 'notes', scen = SCEN[1], lastIns = null, demoCount = 0;
+  let D = { phase: 'idle', handsFree: false, words: 0, timer: null, wave: null, msgT: null, started: 0, hidden: false };
+
+  // Ports of Quoth's deterministic style rules (StyleRules.apply) and dictionary replacements.
+  function styleApply(text, tone, cat) {
+    const messaging = cat === 'personal' || cat === 'work';
+    let s = text;
+    if (tone === 'formal' && /[A-Za-z0-9]$/.test(s) && s.split(' ').length >= 3 && !s.includes('\n')) s += '.';
+    const sentences = Math.max(1, s.split(/[.!?]/).filter(x => x.trim()).length), multi = s.includes('\n');
+    if (tone === 'veryCasual') s = s.replace(/(^|[.!?\n]\s*)([A-Z][A-Za-z']*)/g, (m, pre, w) => (w === 'I' || /^I'/.test(w) || (w.length > 1 && w === w.toUpperCase()) || S.dict.some(d => d.kind === 'word' && d.phrase === w)) ? m : pre + w[0].toLowerCase() + w.slice(1));
+    if (tone === 'excited' && !multi && /\.$/.test(s)) s = s.slice(0, -1) + '!';
+    const limit = { formal: 0, casual: 10, veryCasual: Infinity, excited: messaging ? 2 : 0 }[tone];
+    if (limit > 0 && sentences <= limit && !multi) s = s.replace(/\s+$/, '').replace(/(\.\.\.|…|\.)$/, '');
+    return s;
+  }
+  function applyDict(s) {
+    S.dict.filter(d => d.kind === 'rep').forEach(d => {
+      const re = new RegExp('\\b' + d.phrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'gi');
+      if (re.test(s)) { d.uses++; s = s.replace(re, d.rep); }
+    });
+    return s;
+  }
+  const output = sc => {
+    const lvl = S.set.cleanup, base = sc[lvl];
+    return lvl === 'none' ? base : applyDict(styleApply(base, S.styles[APPS[app].cat], APPS[app].cat));
+  };
+
+  const appwin = $('#appwin'), pill = $('#pill');
+  function renderApp() {
+    const a = APPS[app];
+    $('#app-name').textContent = a.name;
+    document.querySelectorAll('.dock button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.app === app)));
+    const body = (lastIns && lastIns.app === app)
+      ? esc(a.buf.slice(0, lastIns.start)) + `<span class="ins" id="ins">${esc(a.buf.slice(lastIns.start, lastIns.end))}</span>` + esc(a.buf.slice(lastIns.end))
+      : esc(a.buf);
+    let html = `<div class="tb"><div class="lights" aria-hidden="true"><i></i><i></i><i></i></div><div class="t">${esc(a.name === 'Messages' ? 'Sam' : a.name === 'Mail' ? a.title : 'Notes')}</div></div>`;
+    if (app === 'notes') html += `<div class="bd"><b>${esc(a.title)}</b>\n${body}<span class="caret"></span></div>`;
+    if (app === 'mail') html += `<div class="meta">To: Sam Jansen</div><div class="meta">Subject: ${esc(a.title)}</div><div class="bd">${body}<span class="caret"></span></div>`;
+    if (app === 'messages') html += `<div class="chat">${a.chat.map(m => `<div class="bub${m.me ? ' me' : ''}">${esc(m.t)}</div>`).join('')}</div>`
+      + `<div class="chatin"><div class="field">${a.buf ? body : '<span class="ph">iMessage</span>'}<span class="caret"></span></div><button class="b pri" type="button" id="send"${a.buf ? '' : ' disabled'}>Send</button></div>`;
+    appwin.innerHTML = html;
+    const sendB = $('#send');
+    if (sendB) sendB.onclick = () => { a.chat.push({ me: true, t: a.buf }); a.buf = ''; lastIns = null; renderApp(); setTimeout(() => { a.chat.push({ me: false, t: 'No problem, see you soon' }); renderApp(); }, 1100); };
+    const chat = $('.chat', appwin); if (chat) chat.scrollTop = chat.scrollHeight;
+    const bd = $('.bd', appwin); if (bd) bd.scrollTop = bd.scrollHeight;
+    const ins = $('#ins'); if (ins) setTimeout(() => ins.classList.add('done'), 60);
+  }
+  function renderChips() {
+    $('#chips').innerHTML = SCEN.map(s => `<button class="chip" type="button" data-sc="${s.id}" aria-pressed="${s === scen}">${esc(s.label)}</button>`).join('');
+    renderSaid();
+  }
+  function renderSaid(spoken) {
+    const w = scen.spoken.split(' '), n = spoken == null ? 0 : spoken;
+    $('#said-l').textContent = D.phase === 'recording' ? 'You say' : n ? 'You said' : "You'll say";
+    $('#said').innerHTML = '“' + w.map((x, i) => i < n || spoken == null ? esc(x) : `<s>${esc(x)}</s>`).join(' ') + '”';
+  }
+  function renderLevel() {
+    document.querySelectorAll('#lvl button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lvl === S.set.cleanup)));
+  }
+  function setPill(kind, html, label) {
+    pill.className = 'pill' + (kind ? ' ' + kind : '');
+    pill.innerHTML = html || '';
+    pill.setAttribute('aria-label', label || '');
+    pill.hidden = kind === 'idle' && (!S.set.pillAlways || D.hidden);
+  }
+  const waveHTML = n => `<div class="wave">${'<i></i>'.repeat(n)}</div>`;
+  function idle() { D.phase = 'idle'; clearInterval(D.wave); clearInterval(D.timer); setPill('idle', '', 'Quoth is idle. Click for the menu.'); talkUI(); }
+  function talkUI() {
+    const on = D.phase === 'recording';
+    $('#talk').classList.toggle('on', on);
+    $('#talk-l').textContent = on ? (D.handsFree ? 'Hands-free: tap ■ to stop' : 'Listening… let go when done') : 'Hold to talk';
+    $('#talk-hint').textContent = `or hold the space bar · ${S.set.handsFree ? 'double-tap for hands-free' : 'hands-free is off in Settings'} · in the app: hold ${hk()}`;
+  }
+  function message(text, err) {
+    D.phase = 'message'; clearInterval(D.wave); clearInterval(D.timer);
+    setPill('msg' + (err ? ' err' : ''), esc(text), text);
+    clearTimeout(D.msgT); D.msgT = setTimeout(() => { if (D.phase === 'message') idle(); }, 2200);
+    talkUI();
+  }
+  function startRec(handsFree) {
+    if (D.phase === 'processing') return;
+    $('#qmenu').hidden = true; $('#pmenu').hidden = true;
+    D.phase = 'recording'; D.handsFree = handsFree; D.words = 0; D.started = Date.now();
+    const n = handsFree ? 16 : 20;
+    setPill('', (handsFree ? `<button class="rb" type="button" data-pa="cancel" aria-label="Cancel">${ic('x', 3)}</button>` : '') + waveHTML(n)
+      + (handsFree ? `<button class="rb stop" type="button" data-pa="stop" aria-label="Stop and type">${ic('stop', 3)}</button>` : ''), 'Quoth is listening');
+    const bars = [...pill.querySelectorAll('.wave i')], total = scen.spoken.split(' ').length;
+    clearInterval(D.wave);
+    D.wave = setInterval(() => { const talking = D.words < total; bars.forEach(b => { b.style.height = Math.max(3, (talking ? Math.random() * .9 + .1 : Math.random() * .12) * 20) + 'px'; }); }, 90);
+    clearInterval(D.timer);
+    D.timer = setInterval(() => { if (D.words < total) { D.words++; renderSaid(D.words); } }, 240);
+    renderSaid(0); talkUI();
+  }
+  function finishRec() {
+    if (D.phase !== 'recording') return;
+    clearInterval(D.timer);
+    const total = scen.spoken.split(' ').length;
+    if (D.words < total) {
+      renderSaid(); return message(D.words < 2 ? 'Too short. Hold while you speak' : 'Demo: hold until the sentence ends');
+    }
+    D.phase = 'processing'; clearInterval(D.wave);
+    setPill('', '<div class="dots"><i></i><i></i><i></i></div>', 'Quoth is tidying up');
+    talkUI();
+    const dur = (Date.now() - D.started) / 1000, ms = 700 + Math.round(Math.random() * 500);
+    setTimeout(() => insert(output(scen), dur, ms), ms);
+  }
+  function insert(text, dur, ms) {
+    const a = APPS[app];
+    const sep = a.buf && !/\n$/.test(a.buf) ? (app === 'notes' ? '\n' : ' ') : '';
+    const start = a.buf.length + sep.length;
+    a.buf += sep + text;
+    lastIns = { app, start, end: a.buf.length, raw: scen.none, final: text };
+    renderApp(); idle();
+    $('#said-l').textContent = scen.after ? scen.after : 'You said';
+    S.history.unshift({ id: ++uid, at: Date.now(), app: a.name, dur: Math.max(1, dur), ms, raw: scen.none, final: text, fresh: true });
+    S.words += text.split(/\s+/).length;
+    if (S.section === 'history' || S.section === 'insights') render();
+    if (++demoCount <= 5) T('quoth-demo-dictation', { example: scen.id, level: S.set.cleanup, app, handsFree: D.handsFree });
+  }
+  function cancelRec() { if (D.phase === 'recording') { renderSaid(); message('Cancelled'); } }
+
+  // hold / double-tap logic for the button and the space bar
+  let downAt = 0, lastTapEnd = 0, lastTapShort = false;
+  function press() {
+    const t = Date.now();
+    if (D.phase === 'recording' && D.handsFree) return finishRec();
+    if (S.set.handsFree && lastTapShort && t - lastTapEnd < 400) { lastTapShort = false; downAt = 0; return startRec(true); }
+    downAt = t; startRec(false);
+  }
+  function release() {
+    if (!downAt) return;
+    const held = Date.now() - downAt; downAt = 0;
+    if (D.phase !== 'recording' || D.handsFree) return;
+    if (held < 260) { lastTapShort = true; lastTapEnd = Date.now(); clearInterval(D.timer); clearInterval(D.wave); renderSaid(); idle(); if (S.set.handsFree) { $('#talk-l').textContent = 'Tap again for hands-free'; } return; }
+    lastTapShort = false; finishRec();
+  }
+  const talk = $('#talk');
+  talk.addEventListener('pointerdown', e => { e.preventDefault(); talk.setPointerCapture && talk.setPointerCapture(e.pointerId); press(); });
+  talk.addEventListener('pointerup', release);
+  talk.addEventListener('pointercancel', release);
+  talk.addEventListener('contextmenu', e => e.preventDefault());
+  talk.addEventListener('keydown', e => { if ((e.key === 'Enter') && !e.repeat) { e.preventDefault(); press(); } });
+  talk.addEventListener('keyup', e => { if (e.key === 'Enter') release(); });
+  let deskVisible = false;
+  new IntersectionObserver(es => es.forEach(e => { deskVisible = e.isIntersecting; }), { threshold: 0.3 }).observe($('#desk'));
+  // Space dictates while the demo is on screen, except in text fields and on controls outside the demo.
+  const typing = el => el && (el.closest('input, textarea, select, [contenteditable="true"]') || (el.closest('button, a, summary') && !el.closest('#try')));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { cancelRec(); $('#qmenu').hidden = true; $('#pmenu').hidden = true; $('#qicon').setAttribute('aria-expanded', 'false'); }
+    if (e.code !== 'Space' || !deskVisible || typing(e.target)) return;
+    e.preventDefault(); if (!e.repeat) press();
+  });
+  document.addEventListener('keyup', e => { if (e.code === 'Space' && deskVisible && !typing(e.target)) { e.preventDefault(); release(); } });
+  window.addEventListener('blur', release);
+  pill.addEventListener('click', e => {
+    const b = e.target.closest('[data-pa]');
+    if (b) { b.dataset.pa === 'stop' ? finishRec() : cancelRec(); return; }
+    if (D.phase === 'idle') { const m = $('#pmenu'); m.hidden = !m.hidden; }
+  });
+  $('#pmenu').addEventListener('click', e => {
+    const b = e.target.closest('[data-pm]'); if (!b) return;
+    $('#pmenu').hidden = true;
+    if (b.dataset.pm === 'open') openHub('features');
+    else { D.hidden = true; idle(); setTimeout(() => { D.hidden = false; if (D.phase === 'idle') idle(); }, 8000); }
+  });
+  $('#chips').addEventListener('click', e => {
+    const b = e.target.closest('[data-sc]'); if (!b || D.phase === 'recording') return;
+    scen = SCEN.find(s => s.id === b.dataset.sc);
+    if (scen.app !== app) { app = scen.app; lastIns = null; renderApp(); }
+    renderChips();
+  });
+  document.querySelector('.dock').addEventListener('click', e => {
+    const b = e.target.closest('[data-app]'); if (!b || D.phase === 'recording') return;
+    app = b.dataset.app; lastIns = null;
+    if (scen.app !== app) { scen = SCEN.find(s => s.app === app); renderChips(); }
+    renderApp();
+  });
+  $('#lvl').addEventListener('click', e => { const b = e.target.closest('[data-lvl]'); if (b) { S.set.cleanup = b.dataset.lvl; renderLevel(); buildMenu(); if (S.section === 'settings') render(); } });
+
+  // menu bar menu (the app's status-item menu)
+  const qmenu = $('#qmenu'), qicon = $('#qicon');
+  qicon.innerHTML = ic('wave', 2.2);
+  function buildMenu() {
+    const lv = S.set.cleanup, ck = on => on ? `<span class="ck">${'✓'}</span>` : '';
+    qmenu.innerHTML =
+      `<div class="mi" aria-disabled="true">Hold ${esc(hk())} to dictate</div><hr>`
+      + `<button class="mi" role="menuitem" data-mm="open">Open Quoth…</button>`
+      + `<button class="mi" role="menuitem" data-mm="paste"${lastIns ? '' : ' aria-disabled="true"'}>Paste Last Transcript <kbd>⌃⌘V</kbd></button>`
+      + `<button class="mi" role="menuitem" data-mm="undo"${lastIns ? '' : ' aria-disabled="true"'}>Undo AI Edit (paste raw)</button>`
+      + `<button class="mi" role="menuitem" data-mm="scratch">Scratchpad <kbd>⌥S</kbd></button>`
+      + `<button class="mi" role="menuitem" data-mm="meet">${S.recording ? 'Stop Meeting Notes' : 'Start Meeting Notes'}</button><hr>`
+      + `<div style="position:relative"><button class="mi" role="menuitem" data-mm="cl" aria-haspopup="menu">Auto Cleanup <span>›</span></button>`
+      + `<div class="menu sub" data-sub="cl" hidden>${['none', 'light', 'medium'].map(l => `<button class="mi" role="menuitemradio" aria-checked="${l === lv}" data-lv="${l}">${ck(l === lv)}${l[0].toUpperCase() + l.slice(1)}</button>`).join('')}</div></div>`
+      + `<div style="position:relative"><button class="mi" role="menuitem" data-mm="pv" aria-haspopup="menu">Provider <span>›</span></button>`
+      + `<div class="menu sub" data-sub="pv" hidden><button class="mi" data-pv="local">${ck(S.set.speechRun === 'local' && S.set.textRun !== 'cloud')}Local (free, private)</button><button class="mi" data-pv="cloud">${ck(S.set.speechRun === 'cloud' && S.set.textRun === 'cloud')}Cloud (your API key)</button></div></div><hr>`
+      + `<a class="mi" role="menuitem" href="mailto:arian.shafa.analytics@gmail.com?subject=Quoth%20feedback">Email the Developer…</a>`
+      + `<button class="mi" role="menuitem" data-mm="upd">Check for Updates…</button>`
+      + `<button class="mi" role="menuitem" data-mm="quit">Quit Quoth <kbd>⌘Q</kbd></button>`;
+  }
+  function placeMenu() {
+    const d = $('#desk').getBoundingClientRect(), q = qicon.getBoundingClientRect();
+    const w = Math.min(270, d.width - 16);
+    qmenu.style.minWidth = w + 'px';
+    qmenu.style.top = (q.bottom - d.top + 2) + 'px';
+    qmenu.style.left = Math.max(8, Math.min(q.left - d.left, d.width - w - 8)) + 'px';
+  }
+  qicon.addEventListener('click', e => {
+    e.stopPropagation();
+    buildMenu(); qmenu.hidden = !qmenu.hidden; qicon.setAttribute('aria-expanded', String(!qmenu.hidden));
+    if (!qmenu.hidden) { placeMenu(); T('quoth-demo-menu'); }
+  });
+  qmenu.addEventListener('click', e => {
+    e.stopPropagation();
+    const it = e.target.closest('.mi'); if (!it || it.getAttribute('aria-disabled') === 'true') return;
+    if (it.dataset.mm === 'cl' || it.dataset.mm === 'pv') {
+      qmenu.querySelectorAll('.sub').forEach(s => { s.hidden = s.dataset.sub !== it.dataset.mm || !s.hidden; });
+      qmenu.querySelectorAll('[data-mm="cl"],[data-mm="pv"]').forEach(x => x.classList.toggle('open', !qmenu.querySelector(`[data-sub="${x.dataset.mm}"]`).hidden));
+      return;
+    }
+    const close = () => { qmenu.hidden = true; qicon.setAttribute('aria-expanded', 'false'); };
+    if (it.dataset.lv) { S.set.cleanup = it.dataset.lv; renderLevel(); if (S.section === 'settings') render(); return close(); }
+    if (it.dataset.pv) { S.set.speechRun = it.dataset.pv; S.set.textRun = it.dataset.pv === 'cloud' ? 'cloud' : 'builtin'; close(); return deskToast(it.dataset.pv === 'cloud' ? 'In the app, cloud mode uses your own API key (set it in Models).' : 'Everything runs on this Mac.'); }
+    close();
+    const m = it.dataset.mm;
+    if (m === 'open') openHub('features');
+    if (m === 'paste' && lastIns) { lastIns.app = app; const a = APPS[app]; const st = a.buf.length + (a.buf ? 1 : 0); a.buf += (a.buf ? (app === 'notes' ? '\n' : ' ') : '') + lastIns.final; lastIns = { ...lastIns, start: st, end: a.buf.length }; renderApp(); }
+    if (m === 'undo' && lastIns && lastIns.app === app) { const a = APPS[app]; a.buf = a.buf.slice(0, lastIns.start) + lastIns.raw + a.buf.slice(lastIns.end); lastIns = { ...lastIns, end: lastIns.start + lastIns.raw.length, final: lastIns.raw }; renderApp(); }
+    if (m === 'scratch') deskToast('In the app, this opens a floating notepad with version history.');
+    if (m === 'meet') openHub('meetings');
+    if (m === 'upd') deskToast("You're up to date. (Quoth checks GitHub once a day.)");
+    if (m === 'quit') deskToast("This is a demo, so there's nothing to quit.");
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#qmenu') && e.target !== qicon) { qmenu.hidden = true; qicon.setAttribute('aria-expanded', 'false'); }
+    if (!e.target.closest('#pmenu') && !e.target.closest('#pill')) $('#pmenu').hidden = true;
+  });
+  function deskToast(text) { message(text); }
+  const clock = () => { const d = new Date(); $('#clock').textContent = d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }) + '  ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' }); };
+  clock(); setInterval(clock, 20000);
+  document.querySelector('.dock .notes').innerHTML = ic('lines', 2.2);
+  document.querySelector('.dock .msgs').innerHTML = ic('bubble', 2);
+  document.querySelector('.dock .mail').innerHTML = ic('mail', 2);
+
+  // ---------- the Hub replica ----------
+  const SECTIONS = [['features', 'Features', 'grid'], ['history', 'History', 'clock'], ['insights', 'Insights', 'chart'], ['meetings', 'Meetings', 'people'],
+    ['dictionary', 'Dictionary', 'book'], ['snippets', 'Snippets', 'textplus'], ['style', 'Style', 'textformat'], ['transforms', 'Transforms', 'wand'],
+    ['models', 'Models', 'cpu'], ['settings', 'Settings', 'gear'], ['setup', 'Setup', 'shield']];
+  const side = $('#side'), detail = $('#detail'), hub = $('#hub');
+  side.insertAdjacentHTML('beforeend', SECTIONS.map(([id, t, i]) => `<button type="button" data-sec="${id}">${ic(i)}${t}</button>`).join(''));
+  const seenSec = new Set();
+  function go(sec) {
+    S.section = sec; render(); detail.scrollTop = 0;
+    if (!seenSec.has(sec)) { seenSec.add(sec); T('quoth-tour-section', { section: sec }); }
+  }
+  function openHub(sec) { go(sec); $('#app').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  side.addEventListener('click', e => { const b = e.target.closest('[data-sec]'); if (b) go(b.dataset.sec); });
+
+  let toastT;
+  function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('on'), 2600); }
+  const header = (t, s, right = '') => `<div class="hd"><div><h4>${t}</h4><p>${s}</p></div>${right}</div>`;
+  const tg = (key, on, label, dis) => `<button class="tg" type="button" role="switch" aria-checked="${!!on}" aria-label="${esc(label)}" data-tg="${key}"${dis ? ' disabled' : ''}></button>`;
+  const trow = (key, on, label, cap, dis) => `<div class="r"><div class="grow">${label}${cap ? `<div class="cap">${cap}</div>` : ''}</div>${tg(key, on, label.replace(/<[^>]+>/g, ''), dis)}</div>`;
+  const pop = (key, val, opts, label) => `<select class="pop" data-pop="${key}" aria-label="${esc(label)}">${opts.map(o => { const [v, t] = Array.isArray(o) ? o : [o, o]; return `<option value="${esc(v)}"${v === val ? ' selected' : ''}>${esc(t)}</option>`; }).join('')}</select>`;
+  const prow = (label, key, val, opts) => `<div class="r"><span>${label}</span>${pop(key, val, opts, label)}</div>`;
+  const group = (title, rows) => `<div class="g">${title ? `<h5>${title}</h5>` : ''}<div class="rows">${rows}</div></div>`;
+  const fmtTime = t => new Date(t).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+  const fmtDate = t => new Date(t).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+  const V = {};
+  V.features = () => {
+    const F = (i, t, w, h, tab) => `<div class="fc"><div class="t">${ic(i)}${t}${tab ? `<button class="lk s" type="button" data-go="${tab}">Open</button>` : ''}</div><p>${w}</p><p class="cap">${h}</p></div>`;
+    const k = esc(hk());
+    const groups = [
+      ['Dictation', [['mic', 'Push to talk', 'Speak instead of typing, in any app. Cleaned-up text appears where your cursor is.', `Hold ${k}, speak, release. Esc cancels.`, 'settings'],
+        ['hand', 'Hands-free', 'Keep recording without holding a key, for longer thoughts.', `Double-tap ${k}. Tap again (or ■ on the Earshot pill) to stop.`, 'settings'],
+        ['sparkles', 'Auto Cleanup', 'Removes um/uh, applies corrections ("2, actually 3" → 3), spoken punctuation, lists and email layout. Never answers questions you dictate.', 'Choose None, Light or Medium in Settings or the menu bar.', 'settings'],
+        ['clip', 'Paste last / Undo AI edit', 'Paste your last dictation again, or swap the cleaned text for exactly what you said.', '⌃⌘V pastes the last one. Menu bar → Undo AI Edit.', 'history'],
+        ['mouse', 'Thumb Talk', 'Dictate with a mouse button instead of the keyboard. Handy with a mouse that has extra side buttons (back/forward) or a middle button.', 'Settings → Mouse button to dictate: hold that button, speak, release. You can also map a button to Enter.', 'settings'],
+        ['globe', 'Languages', 'About 100 languages, detected automatically, pinned, or limited to a set you choose. UK/Canadian spelling, Swiss German, Hinglish and more.', 'Settings → Languages and Variant.', 'settings']]],
+      ['Personal', [['book', 'Dictionary', 'Names and terms spelled your way, plus replacements. Learns a name when you fix it right after dictating.', 'Add words in Dictionary. Star important ones.', 'dictionary'],
+        ['textplus', 'Snippets', 'Say a short trigger, get a longer text exactly as saved (links, addresses, signatures).', 'Create them in Snippets, then just say the trigger.', 'snippets'],
+        ['textformat', 'Style', 'Formal, casual, very casual or excited, separately for messages, work chat, email and everything else.', 'Pick a tone per app type in Style.', 'style'],
+        ['cursor', 'Context awareness', 'Reads the text around your cursor (never password fields) to continue sentences naturally and spell code identifiers.', 'On by default; toggle it in Style.', 'style']]],
+      ['Power tools', [['command', 'Command Mode', 'Speak an instruction: edit selected text, draft a reply, ask a question, or search the web.', `Hold ${k} + Control and say e.g. "make this shorter" or "reply that I'll be late".`, 'settings'],
+        ['wand', 'Transforms', 'One-key rewrites of selected text: Polish, Prompt Engineer, and up to 7 of your own.', 'Select text, press ⌥1 (Polish), ⌥2 (Prompt Engineer), ⌥3–⌥9 (yours). ⌥O shows the changes.', 'transforms'],
+        ['code', 'Developer features', 'In Cursor/Windsurf, "index dot ts" becomes @index.ts; spoken names match identifiers in your code; terminals get safe pasting.', 'Just dictate in your editor or terminal.'],
+        ['note', 'Scratchpad', 'A floating notepad with version history. Dictate into it like any app.', '⌥S, or menu bar → Scratchpad.']]],
+      ['Meetings &amp; insights', [['people', 'Meeting notes', "Records your mic and the call audio on this Mac (no bot joins), then writes a transcript, summary, decisions and action items. Ask questions across meetings.", "Menu bar → Start Meeting Notes. Let participants know you're taking notes.", 'meetings'],
+        ['chart', 'Insights', 'Words per minute, time saved, streaks, the apps you dictate in, and a profile of your speaking style.', 'Open Insights.', 'insights'],
+        ['clock', 'History', 'Every dictation with raw and cleaned text, audio playback and retry.', 'Open History. Retention is set in Settings → Privacy.', 'history']]],
+      ['Models &amp; connections', [['cpu', 'Models &amp; Model Lab', 'Choose the speech model (Whisper) and language models (Qwen, Llama…) for each job, on this Mac or in the cloud, and compare them side by side.', 'Open Models.', 'models'],
+        ['link', 'AI apps (MCP)', 'Lets Claude and other AI apps read your meeting and Scratchpad notes (read-only, never dictations).', 'Settings → AI apps: copy the config into Claude Desktop.', 'settings']]]
+    ];
+    const sc = [[`Hold ${k}`, 'Dictate'], [`Double-tap ${k}`, 'Hands-free'], [`${k} + Control`, 'Command Mode'], ['Esc', 'Cancel recording'], ['⌃⌘V', 'Paste last dictation'], ['⌥1 … ⌥9', 'Transforms'], ['⌥O', "Show last transform's changes"], ['⌥S', 'Scratchpad']];
+    return header('Features', 'Everything Quoth can do, how to use it, and where to change it.')
+      + `<div class="form" style="display:grid;gap:18px">${groups.map(([g, fs]) => `<div><p class="gt">${g}</p><div class="cards">${fs.map(f => F(...f)).join('')}</div></div>`).join('')}`
+      + `<div><p class="gt">Shortcuts</p><div class="grid2">${sc.map(([a, b]) => `<kbd>${a}</kbd><span>${b}</span>`).join('')}</div></div></div>`;
+  };
+
+  V.history = () => {
+    const words = S.history.reduce((n, r) => n + (r.empty ? 0 : r.final.split(/\s+/).length), 0);
+    const right = S.history.length ? `<button class="b danger" type="button" data-act="hist-clear">Delete All</button>` : '';
+    let h = header('History', `${S.history.length} dictations · ${words} words`, right);
+    if (!S.history.length) return h + `<div class="empty">${ic('wave')}<b>No dictations yet</b><span>Hold ${esc(hk())}, speak, and release.</span><span>Or try the demo above: your dictations appear here.</span></div>`;
+    h += `<div class="hist">` + S.history.map(r => {
+      const raw = S.showRaw.has(r.id);
+      const body = r.empty ? `<div class="tx sec2">(nothing heard)</div>` : `<div class="tx${raw ? ' sec2' : ''}">${esc(raw ? r.raw : r.final)}</div>`;
+      const acts = r.empty ? '' : `<button class="lk" data-act="h-copy" data-id="${r.id}">Copy</button><button class="lk" data-act="h-copyraw" data-id="${r.id}">Copy raw</button><button class="lk" data-act="h-raw" data-id="${r.id}">${raw ? 'Show cleaned' : 'Show raw'}</button>`;
+      return `<div class="hrow${r.fresh ? ' new-row' : ''}"><div class="m"><span>${fmtTime(r.at)}</span><span>${fmtDate(r.at)}</span><span>· ${esc(r.app)}</span><span>· ${r.dur.toFixed(1)} s</span>${r.ms ? `<span class="ms">${r.ms} ms</span>` : ''}</div>${body}`
+        + `<div class="ac">${acts}<button class="lk" data-act="h-play">Play</button><button class="lk" data-act="h-retry">Retry</button><button class="lk" data-act="h-del" data-id="${r.id}">Delete</button></div></div>`;
+    }).join('') + `</div>`;
+    S.history.forEach(r => { r.fresh = false; });
+    return h;
+  };
+
+  // deterministic example activity for the heatmap
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const heat = Array.from({ length: 16 * 7 }, (_, i) => { const r = rnd(); return r < .28 ? 0 : Math.round(r * r * 900 + (i > 90 ? 300 : 0)); });
+  S.words = 18240;
+  V.insights = () => {
+    const w = S.words, today = new Date().getDay();
+    let cells = '';
+    for (let c = 0; c < 16; c++) {
+      cells += '<div>';
+      for (let d = 0; d < 7; d++) {
+        const i = c * 7 + d, future = c === 15 && d > today, v = c === 15 && d === today ? heat[i] + (w - 18240) : heat[i];
+        const bg = future ? 'transparent' : v === 0 ? 'var(--w-ctl)' : `color-mix(in srgb, var(--w-acc) ${Math.round(25 + 75 * Math.min(1, v / 1100))}%, transparent)`;
+        cells += `<i style="background:${bg}" title="${v} words"></i>`;
+      }
+      cells += '</div>';
+    }
+    const apps = [['Slack', 5420], ['Mail', 4310], ['Notes', 3120], ['Cursor', 2650], ['WhatsApp', 1480], ['Messages', 1260]];
+    const max = apps[0][1];
+    return header('Insights', 'Your dictation, in numbers. Only counts are stored here, never text.') + `<div class="form" style="display:grid;gap:20px">`
+      + `<div class="tiles"><div class="tile"><span class="cap">Words dictated</span><b>${w.toLocaleString('en-GB')}</b></div><div class="tile"><span class="cap">Words per minute</span><b>142</b></div>`
+      + `<div class="tile"><span class="cap">Time saved</span><b>${(w / 40 / 60 - w / 142 / 60).toFixed(1)} h</b></div><div class="tile"><span class="cap">Streak</span><b>6 days</b><span class="cap">Longest: 14</span></div></div>`
+      + `<div><b>Last 16 weeks</b><div class="heat" style="margin-top:8px">${cells}</div></div>`
+      + `<div><b>Where you dictate</b><div class="bars" style="margin-top:8px">${apps.map(([a, n]) => `<div class="br"><span>${a}</span><span><em style="width:${Math.max(2, n / max * 100)}%"></em></span><span>${n.toLocaleString('en-GB')}</span></div>`).join('')}</div></div>`
+      + `<div style="display:grid;gap:8px"><b>Your Voice</b><p>About 21 words per dictation, 13 words per sentence. 14% questions, 3% exclamations.</p><p class="sec2">Words you use most: meeting, tomorrow, update, thanks, quick</p>`
+      + (S.profile ? `<p>${esc(S.profile)}</p>` : '')
+      + `<div><button class="b" type="button" data-act="profile"${S.profiling ? ' disabled' : ''}>${S.profiling ? 'Writing your profile…' : 'Describe my communication style'}</button></div></div></div>`;
+  };
+
+  V.meetings = () => {
+    const m = S.meetings.find(x => x.id === S.meetingSel);
+    let h = `<div class="hd"><div><h4>Meetings</h4><p>Notes from your calls, recorded on this Mac without a bot joining. Let participants know you're taking notes.</p></div><button class="b" type="button" data-act="meet-rec">${S.recording ? 'Stop notes' : 'Start meeting notes'}</button></div>`
+      + `<div style="display:flex;gap:8px;padding:0 20px"><input class="tf" id="ask" placeholder="Ask across all meetings (e.g. what did we decide about pricing?)" aria-label="Ask across all meetings"><button class="b" type="button" data-act="ask">${S.asking ? 'Thinking…' : 'Ask'}</button></div>`
+      + (S.answer ? `<div class="answer">${esc(S.answer)}</div>` : '')
+      + `<div class="mt" style="margin-top:12px"><div class="ml">${S.meetings.map(x => `<button type="button" data-meet="${x.id}" aria-current="${x.id === S.meetingSel}"><span>${esc(x.title)}</span><span class="cap">${fmtDate(x.at)} · ${x.min} min${x.status ? ` · <span class="warn">${x.status}</span>` : ''}</span></button>`).join('')}</div><div class="md">`;
+    if (!m) h += `<p class="sec2">${S.meetings.length ? 'Select a meeting.' : 'No meetings yet.'}</p>`;
+    else {
+      h += `<b style="font-size:15px">${esc(m.title)}</b><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center"><div class="seg"><button type="button" data-act="mt-notes" aria-pressed="${!S.meetingTr}">Notes</button><button type="button" data-act="mt-tr" aria-pressed="${S.meetingTr}">Transcript</button></div><span style="flex:1"></span>`
+        + `<button class="b" type="button" data-act="toast" data-t="Reprocessing writes the notes again with the current model.">Reprocess</button><button class="b" type="button" data-act="toast" data-t="Copied.">Copy</button><button class="b danger" type="button" data-act="meet-del">Delete</button></div>`;
+      if (S.meetingTr) h += `<div class="trs">${m.tr.map(([t, who, x]) => `<span class="ts">${t}</span><b style="color:${who === 'Me' ? 'var(--w-acc)' : 'inherit'}">${who}</b><span>${esc(x)}</span>`).join('')}</div>`;
+      else if (m.notes) {
+        let out = '', list = null;
+        const close = () => { if (list) { out += '</ul>'; list = null; } };
+        m.notes.forEach(([k, x]) => {
+          if (k === 'li' || k === 'todo') { if (list !== k) { close(); out += `<ul${k === 'todo' ? ' class="todo"' : ''}>`; list = k; } out += `<li>${esc(x)}</li>`; }
+          else { close(); out += k === 'h' ? `<h6>${esc(x)}</h6>` : `<p>${esc(x)}</p>`; }
+        });
+        close(); h += out;
+      } else h += `<p class="sec2">Notes appear here once the meeting is processed.</p>`;
+    }
+    return h + '</div></div>';
+  };
+
+  V.dictionary = () => {
+    const f = S.dictFilter.toLowerCase();
+    const list = S.dict.slice().sort((a, b) => a.phrase.localeCompare(b.phrase)).filter(e => !f || e.phrase.toLowerCase().includes(f) || (e.rep || '').toLowerCase().includes(f));
+    return header('Dictionary', 'Words Quoth should spell your way, and phrases to replace. Words also steer the speech model.') + `<div class="form">`
+      + group('Add', `<div class="r"><input class="tf grow" id="d-word" placeholder="Word or name (e.g. Kubernetes)" aria-label="Word or name"><button class="b" type="button" data-act="d-add">Add word</button></div>`
+        + `<div class="r"><input class="tf grow" id="d-sp" placeholder="When I say…" aria-label="When I say" style="flex:1"><span class="sec2" style="width:14px;display:inline-grid">${ic('arrow')}</span><input class="tf" id="d-rep" placeholder="…write" aria-label="write instead" style="flex:1"><button class="b" type="button" data-act="d-addrep">Add replacement</button></div>`
+        + (S.err.dict ? `<div class="r"><span class="cap bad">${esc(S.err.dict)}</span></div>` : '')
+        + trow('autoLearn', S.autoLearn, 'Learn words automatically when I correct a dictation'))
+      + `<div style="height:18px"></div>`
+      + group(`${S.dict.length} entries`, `<div class="r"><input class="tf" id="d-filter" placeholder="Filter" aria-label="Filter" value="${esc(S.dictFilter)}"></div><div id="d-list">${list.map(e =>
+          `<div class="r"><div class="grow" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><button class="ib${e.star ? ' star-on' : ''}" type="button" data-act="d-star" data-id="${e.id}" aria-label="${e.star ? 'Unstar' : 'Star'}" title="Starred words are always sent to the speech model">${ic('star')}</button>`
+          + (e.kind === 'word' ? `<span>${esc(e.phrase)}</span>` : `<span class="sec2">${esc(e.phrase)}</span><span class="sec2" style="width:12px;display:inline-grid">${ic('arrow')}</span><span>${esc(e.rep)}</span>`)
+          + (e.learned ? `<span class="tagl">learned</span>` : '') + `</div>${e.uses ? `<span class="cap">${e.uses}×</span>` : ''}<button class="ib" type="button" data-act="d-del" data-id="${e.id}" aria-label="Delete">${ic('trash')}</button></div>`).join('')}</div>`)
+      + `<p class="cap" style="margin:10px 10px 0">Try it: add a replacement such as “Sam” → “Samantha”, then dictate the email reply above.</p></div>`;
+  };
+
+  V.snippets = () => header('Snippets', 'Say a trigger phrase and Quoth types the full text, exactly as saved.') + `<div class="form">`
+    + group('New snippet', `<div class="r"><input class="tf" id="s-trig" placeholder="Trigger (e.g. my calendar link)" aria-label="Trigger"></div><div class="r"><textarea class="tf" id="s-exp" aria-label="Text to type"></textarea></div>`
+      + `<div class="r"><span class="cap bad">${esc(S.err.snip || '')}</span><button class="b" type="button" data-act="s-add">Add snippet</button></div>`)
+    + `<div style="height:18px"></div>`
+    + group(`${S.snippets.length} snippets`, S.snippets.map(s => `<div class="r col"><div style="display:flex;gap:8px;align-items:center"><input class="tf" style="font-weight:600" value="${esc(s.trigger)}" data-snip="${s.id}" data-f="trigger" aria-label="Trigger"><button class="ib" type="button" data-act="s-del" data-id="${s.id}" aria-label="Delete">${ic('trash')}</button></div><textarea class="tf ta-ro" data-snip="${s.id}" data-f="exp" aria-label="Text">${esc(s.exp)}</textarea></div>`).join('') || '<div class="r sec2">No snippets yet.</div>')
+    + `</div>`;
+
+  V.style = () => header('Style', 'How capitalisation and punctuation look in each kind of app. Your words never change.') + `<div class="form">`
+    + CATS.map(([k, t, tones]) => group(t, `<div class="r"><span>Tone</span><div class="seg">${tones.map(x => `<button type="button" data-tone="${k}:${x}" aria-pressed="${S.styles[k] === x}">${TONES[x]}</button>`).join('')}</div></div><div class="r"><span class="sec2">${esc(TONE_EX[S.styles[k]])}</span></div>`)).join('<div style="height:18px"></div>')
+    + `<div style="height:18px"></div>`
+    + group('', trow('context', S.set.context, 'Use the text around the cursor as context', 'Quoth reads the focused field through Accessibility (never screenshots, never password fields or password managers) to continue sentences naturally and recognise code identifiers. Nothing leaves your Mac in Local mode.'))
+    + `<p class="cap" style="margin:10px 10px 0">In the demo above, Notes uses “Everything else”, Messages uses “Personal messages” and Mail uses “Email”.</p></div>`;
+
+  V.transforms = () => {
+    const p = S.polish, opts = [['Off', 'Off'], ['Polish', 'Polish'], ['Prompt Engineer', 'Prompt Engineer'], ...S.transforms.map(t => [t.name, t.name])];
+    const pol = [['concise', 'Make more concise'], ['clarity', 'Reword for clarity'], ['reorder', 'Reorder for readability'], ['structure', 'Add structure'], ['tone', 'Maintain tone'], ['main', 'Clarify the main point'], ['impact', 'Refine phrasing for impact']];
+    return header('Transforms', 'Select text anywhere and press a hotkey to rewrite it. With nothing selected, the whole field (or your last dictation) is used. ⌥O shows what changed.') + `<div class="form">`
+      + group('', trow('transformKeys', S.set.transformKeys, 'Enable ⌥1–⌥9 and ⌥O hotkeys') + prow('Auto-apply after every dictation', 'autoTransform', S.set.autoTransform, opts))
+      + `<div style="height:18px"></div>`
+      + group('⌥1 Polish', pol.map(([k, t]) => trow('polish.' + k, p[k], t)).join('')
+        + p.custom.map((c, i) => `<div class="r"><input class="tf grow" placeholder="Custom instruction (≤50 words)" value="${esc(c)}" data-pc="${i}" aria-label="Custom instruction"><button class="ib" type="button" data-act="pc-del" data-i="${i}" aria-label="Delete">${ic('trash')}</button></div>`).join('')
+        + (p.custom.length < 5 ? `<div class="r"><button class="b" type="button" data-act="pc-add">Add custom instruction</button></div>` : ''))
+      + `<div style="height:18px"></div>`
+      + group('⌥2 Prompt Engineer', `<div class="r sec2">Turns a rambling spoken request into a structured prompt for an AI assistant.</div>`)
+      + S.transforms.map((t, i) => `<div style="height:18px"></div>` + group(`⌥${i + 3} ${esc(t.name)}`, `<div class="r"><input class="tf" value="${esc(t.name)}" data-tr="${t.id}" data-f="name" aria-label="Name"></div><div class="r"><input class="tf" value="${esc(t.instr)}" placeholder="Instruction (e.g. Rewrite as a friendly Slack message)" data-tr="${t.id}" data-f="instr" aria-label="Instruction"></div>`
+        + `<div class="r"><button class="b" type="button" data-act="toast" data-t="Writing samples teach the transform your voice.">Add writing sample</button><button class="b danger" type="button" data-act="tr-del" data-id="${t.id}">Delete transform</button></div>`)).join('')
+      + (S.transforms.length < 7 ? `<div style="margin-top:14px"><button class="b" type="button" data-act="tr-add">New custom transform</button></div>` : '') + `</div>`;
+  };
+
+  function dlControl(file, active) {
+    const d = S.dl[file];
+    if (d != null) return `<div style="display:grid;gap:2px;justify-items:end;min-width:120px"><div style="display:flex;gap:6px;align-items:center;width:150px"><div class="pb"><i style="width:${d * 100}%"></i></div></div><span class="cap">${Math.round(d * 100)}% · demo download</span></div>`;
+    if (S.installed.has(file)) return active ? '' : `<button class="b" type="button" data-act="m-use" data-f="${file}">Use</button>`;
+    return `<button class="b" type="button" data-act="m-dl" data-f="${file}">Download</button>`;
+  }
+  V.models = () => {
+    const sr = S.set.speechRun, tr = S.set.textRun;
+    let h = header('Models', 'Pick which AI model does which job, download new ones, and compare them on the same input.') + `<div class="form">`
+      + group('', `<div class="r"><div class="explain"><span class="h">${ic('info')}Two kinds of model, two different jobs</span><p><b>Speech recognition</b> turns your voice into raw text. Quoth uses OpenAI's open-source <b>Whisper</b> models, run on your Mac by whisper.cpp.</p><p><b>Language models</b> turn that raw text into what you meant (cleanup), follow your commands, and write meeting notes. By default that's Alibaba's open-weights <b>Qwen 2.5</b>, run on your Mac by llama.cpp, which is built into Quoth. If you use Ollama, Quoth can use its models instead (Llama, Gemma, Mistral…).</p><p class="sec2">They aren't interchangeable: Qwen can't listen to audio and Whisper can't rewrite text. You can swap the model within each job, and mix local and cloud (e.g. local Whisper + a cloud language model).</p></div></div>`)
+      + `<div style="height:18px"></div>`
+      + group('Speech recognition', `<div class="r cap">Turns your voice into raw text. Bigger models are more accurate with names, accents and noise, but slower.</div>`
+        + prow('Runs on', 'speechRun', sr, [['local', 'This Mac (whisper.cpp)'], ['cloud', 'Cloud API']])
+        + (sr === 'local' ? `<div class="r"><span>Status</span><span class="sec2">Ready</span></div>` + SPEECH.map(([f, n, mb, notes]) => { const a = S.speechModel === f;
+            return `<div class="r top"><span class="radio${a ? ' on' : ''}"></span><div class="grow"><div>${esc(n)}</div><div class="cap">${mb} MB · ${esc(notes)}</div></div>${dlControl(f, a)}</div>`; }).join('')
+          : `<div class="r"><input class="tf" value="whisper-large-v3-turbo" aria-label="Cloud transcription model"></div>`))
+      + `<div style="height:18px"></div>`
+      + group('Language models', prow('Runs on', 'textRun', tr, [['builtin', 'This Mac (built in)'], ['ollama', 'This Mac (Ollama)'], ['cloud', 'Cloud API']])
+        + (tr === 'builtin' ? `<div class="r"><span>Status</span><span class="sec2">Ready</span></div><div class="r cap">One model does every text job: cleanup, Command Mode, Transforms and meeting notes.</div>`
+            + GGUF.map(([f, n, gb, ram, notes]) => { const a = S.textModel === f;
+              return `<div class="r top"><span class="radio${a ? ' on' : ''}"></span><div class="grow"><div>${esc(n)}</div><div class="cap">${gb.toFixed(1)} GB download · ~${ram} GB memory · Apache-2.0<br>${esc(notes)}</div></div>${dlControl(f, a)}</div>`; }).join('')
+          : tr === 'ollama' ? [['Dictation cleanup', 'Removes fillers, applies corrections, formats lists. Runs on every dictation, so speed matters most here.', false], ['Command Mode &amp; Transforms', 'Follows spoken instructions and rewrites selected text. Benefits from a smarter model; speed matters less.', true], ['Meeting notes', 'Summarises meetings and answers questions about them. Runs after the meeting, so a larger model is fine.', true]]
+              .map(([t, x, blank]) => `<div class="r top"><div class="grow">${t}<div class="cap">${x}</div></div>${pop('ollama-' + t, blank ? '' : 'qwen2.5:14b-instruct', [...(blank ? [['', 'Same as cleanup']] : []), ['qwen2.5:14b-instruct', 'Qwen 2.5 14B (default)'], ['qwen2.5:7b-instruct', 'Qwen 2.5 7B']], t)}</div>`).join('')
+              + `<details class="r col"><summary style="cursor:pointer">Download more models</summary>${OLLAMA.map(([n, gb, ram, lic, notes], i) => `<div class="r top"><div class="grow"><div>${esc(n)}</div><div class="cap">${gb.toFixed(1)} GB download · ~${ram} GB memory · ${esc(lic)}<br>${esc(notes)}</div></div>${i < 2 ? '<span class="cap">Installed</span>' : dlControl('ollama-' + i)}</div>`).join('')}<p class="cap">Any model from ollama.com/library works: type its name in a picker above, then download it here or with <code>ollama pull</code>.</p></details>`
+          : `<div class="r"><input class="tf" value="llama-3.3-70b-versatile" aria-label="Cloud language model"></div>`));
+    if (sr === 'cloud' || tr === 'cloud') h += `<div style="height:18px"></div>` + group('Cloud API', `<div class="r"><input class="tf" value="https://api.groq.com/openai/v1" aria-label="Base URL"></div><div class="r"><input class="tf" type="password" placeholder="API key (stored in Keychain): disabled in this demo" disabled aria-label="API key"></div><div class="r cap">Any OpenAI-compatible service. Groq: https://api.groq.com/openai/v1 with whisper-large-v3-turbo and llama-3.3-70b-versatile. OpenAI: https://api.openai.com/v1 with gpt-4o-mini-transcribe and gpt-4.1-mini. A local server (LM Studio, llama.cpp, vLLM) also works here.</div>`);
+    const L = S.lab, opts = L.kind === 0 ? [['builtin', 'Built in: Qwen 2.5 14B'], ['q7', 'Ollama: qwen2.5:7b-instruct'], ['q3', 'Ollama: qwen3:8b']] : [['turbo', 'Whisper Large v3 Turbo (default)'], ['small', 'Whisper Small']];
+    h += `<div style="height:18px"></div>` + group('Model Lab: compare models', `<div class="r"><div class="seg"><button type="button" data-act="lab-k" data-k="0" aria-pressed="${L.kind === 0}">Language models (cleanup)</button><button type="button" data-act="lab-k" data-k="1" aria-pressed="${L.kind === 1}">Speech models</button></div></div>`
+      + `<div class="r cap">${L.kind === 0 ? "Runs Quoth's test sentences (fillers, corrections, lists, questions it must not answer…) through each model with the real cleanup rules, plus your latest dictations." : 'Transcribes three short test recordings with known text, plus your latest dictations, with each model.'}</div>`
+      + opts.map(([k, t]) => trow('lab.' + k, L.picked.has(k), esc(t))).join('')
+      + (L.kind === 0 ? trow('lab.quick', L.quick, 'Quick run (about 20 sentences, one or two per behaviour)') : '') + trow('lab.recent', L.recent, 'Include my recent dictations')
+      + `<div class="r" style="justify-content:flex-start"><button class="b" type="button" data-act="lab-run"${L.running || !L.picked.size ? ' disabled' : ''}>${L.running ? 'Running…' : `Compare ${L.picked.size} model${L.picked.size === 1 ? '' : 's'}`}</button>${L.running ? '<span class="spin"></span><span class="cap">Running the test sentences…</span>' : ''}</div>`
+      + (L.done ? labResults() : ''));
+    return h + `</div>`;
+  };
+  function labResults() {
+    const L = S.lab, names = { builtin: 'Built in: Qwen 2.5 14B', q7: 'qwen2.5:7b-instruct', q3: 'qwen3:8b', turbo: 'Whisper Large v3 Turbo', small: 'Whisper Small' };
+    const picked = [...L.picked];
+    if (L.kind === 1) {
+      const wer = { turbo: '4%', small: '9%' }, t = { turbo: '420 ms', small: '260 ms' };
+      return `<div class="r col"><div class="lab" style="grid-template-columns:repeat(3,auto)"><b>Model</b><b>Word errors (test clips)</b><b>Typical time</b>${picked.map(k => `<span>${names[k]}</span><span>${wer[k]}</span><span>${t[k]}</span>`).join('')}</div><p class="cap" style="margin-top:6px">Example results. Word errors = share of words wrong vs the known text.</p></div>`;
+    }
+    const sum = { builtin: ['17/20', '19/20', 0, '780 ms'], q7: ['14/20', '18/20', 1, '410 ms'], q3: ['15/20', '18/20', 1, '520 ms'] };
+    const outs = { builtin: "So let's meet at 3 on Thursday.", q7: "So let's meet at 3 on Thursday.", q3: "Let's meet at two, actually three, on Thursday." };
+    const outs2 = { builtin: 'What time does the train to Utrecht leave?', q7: 'The train to Utrecht leaves at 14:05.', q3: 'What time does the train to Utrecht leave?' };
+    const verdict = (k, o) => o === "So let's meet at 3 on Thursday." || o === 'What time does the train to Utrecht leave?' ? '✓' : k === 'q7' && o.includes('14:05') ? '·' : '≈';
+    const rows = (input, o) => `<div class="r col" style="gap:3px"><span class="cap">${esc(input)}</span>${picked.map(k => `<div class="labrow"><span>${verdict(k, o[k])}</span><b class="cap">${names[k]}</b><span>${esc(o[k])}</span><span class="cap">${sum[k][3]}</span></div>`).join('')}</div>`;
+    return `<div class="r col"><div class="lab"><b>Model</b><b>Exact</b><b>Same words</b><b>Serious errors</b><b>Typical time</b>${picked.map(k => `<span>${names[k]}</span><span>${sum[k][0]}</span><span>${sum[k][1]}</span><span class="${sum[k][2] ? 'bad' : 'ok'}">${sum[k][2]}</span><span>${sum[k][3]}</span>`).join('')}</div>`
+      + `<p class="cap" style="margin-top:6px">Example results. Serious = answered your question, added content, or had to fall back. ✓ exact · ≈ same words · · different</p></div>`
+      + rows("Um, so let's meet at two, actually three, on Thursday.", outs) + rows('Uh, what time does the, uh, the train to Utrecht leave?', outs2);
+  }
+
+  V.settings = () => {
+    const s = S.set;
+    const mics = S.mics.map((m, i) => `<div class="r"><span class="grow">${esc(m.n)} ${m.v ? '<span class="cap">virtual</span>' : ''}</span><button class="ib" type="button" data-act="mic-up" data-i="${i}" aria-label="Move up">${ic('up', 2)}</button><button class="ib" type="button" data-act="mic-down" data-i="${i}" aria-label="Move down">${ic('down', 2)}</button></div>`).join('');
+    const step = (key, v, label) => `<div class="r"><span>${label.replace('#', v.toFixed(1))}</span><span style="display:flex;gap:2px"><button class="b" type="button" data-act="step" data-k="${key}" data-d="-0.5" aria-label="Decrease">−</button><button class="b" type="button" data-act="step" data-k="${key}" data-d="0.5" aria-label="Increase">+</button></span></div>`;
+    const btns = [['none', 'None: raw transcript'], ['light', 'Light: remove fillers, fix grammar'], ['medium', 'Medium: also reword for clarity']];
+    return `<div style="height:20px"></div><div class="form">`
+      + group('Dictation', prow('Hotkey', 'hotkey', s.hotkey, Object.entries(HOTKEYS))
+        + (s.hotkey === 'fn' ? `<div class="r cap">Set System Settings → Keyboard → “Press 🌐 key to” → Do Nothing, so macOS doesn't open the emoji picker.</div>` : '')
+        + trow('handsFree', s.handsFree, 'Double-tap for hands-free mode') + prow('Auto Cleanup', 'cleanup', s.cleanup, btns)
+        + prow('Languages', 'languages', s.languages[0] || 'Auto-detect', ['Auto-detect', 'English', 'Dutch', 'German', 'French', 'Spanish', 'Persian'])
+        + prow('Variant', 'variant', s.variant, ['Default', 'English (UK spelling)', 'English (Canadian spelling)', 'Swiss German (ss for ß)', 'Hinglish (Hindi in Latin script)', 'Chinese (Simplified)', 'Chinese (Traditional)'])
+        + `<div class="r cap">No languages = detect any language. One = pinned (about 0.5 s faster locally). Several = detect, but only among these.</div>` + trow('sounds', s.sounds, 'Play sounds'))
+      + `<div style="height:18px"></div>` + group('Microphone priority', mics + `<div class="r cap">Quoth uses the highest available device and falls back if it's unplugged.</div>`)
+      + `<div style="height:18px"></div>` + group('Models', `<div class="r sec2"><span>Choose speech and language models, download new ones and compare them in the <button class="lk" type="button" data-go="models"><b>Models</b></button> tab.</span></div>`
+        + step('llmLocal', s.llmLocal, 'Cleanup timeout: # s + 0.08 s per word (on this Mac)') + step('llmCloud', s.llmCloud, 'Cleanup timeout: # s + 0.02 s per word (cloud)'))
+      + `<div style="height:18px"></div>` + group('Command Mode, Scratchpad &amp; Mouse', trow('command', s.command, 'Command Mode: hold the hotkey + Control and speak an instruction', 'Edits the selection (“make this shorter”, “translate to Spanish”), drafts at the cursor (“reply saying I\'ll be late”), answers questions, or searches the web (“search for…”).')
+        + `<div class="r"><input class="tf" placeholder="Command &amp; Transform model (blank = cleanup model)" aria-label="Command and Transform model"></div>` + trow('scratch', s.scratch, '⌥S toggles the Scratchpad')
+        + prow('Mouse button to dictate', 'mouseDict', s.mouseDict, ['Off', 'Middle button', 'Back button', 'Forward button']) + prow('Mouse button for Enter', 'mouseEnter', s.mouseEnter, ['Off', 'Middle button', 'Back button', 'Forward button']))
+      + `<div style="height:18px"></div>` + group('AI apps (MCP)', trow('mcp', s.mcp, 'Let MCP clients read my meeting notes and Scratchpad', "Read-only. Dictations are never shared. Add this to Claude Desktop's claude_desktop_config.json (or any MCP client):")
+        + `<div class="r"><code class="cfg">"quoth": { "command": "/Applications/Quoth.app/Contents/MacOS/quoth-mcp" }</code></div><div class="r"><button class="b" type="button" data-act="toast" data-t="Copied the config.">Copy config</button></div>`)
+      + `<div style="height:18px"></div>` + group('Earshot pill', trow('pillAlways', s.pillAlways, 'Show the Earshot pill at all times', 'The pill is the small bar at the bottom of the screen in the demo above.') + trow('pillHide', s.pillHide, 'Hide the Earshot pill from screen recordings'))
+      + `<div style="height:18px"></div>` + group('Privacy', prow('History', 'retention', s.retention, ['Keep (audio for 14 days)', 'Delete after 24 hours', 'Never store']) + `<div class="r"><button class="b" type="button" data-act="toast" data-t="In the app, this opens ~/Library/Application Support/Quoth in Finder.">Reveal data folder</button></div>`)
+      + `<div style="height:18px"></div>` + group('Updates', `<div class="r"><span>Version</span><span class="sec2">0.4.1</span></div>` + trow('autoUpdate', s.autoUpdate, 'Check for updates automatically') + trow('autoInstall', s.autoInstall, 'Download and install updates automatically', '', !s.autoUpdate)
+        + `<div class="r"><button class="b" type="button" data-act="toast" data-t="You're up to date.">Check for Updates…</button></div><div class="r cap">Checks ask GitHub once a day whether a newer Quoth exists; nothing about you or your dictations is sent.</div>`)
+      + `<div style="height:18px"></div>` + group('Help', `<div class="r" style="justify-content:flex-start;gap:8px"><button class="b" type="button" data-act="diag">${S.copied ? 'Copied' : 'Copy Diagnostics'}</button><a class="b" style="text-decoration:none" href="mailto:arian.shafa.analytics@gmail.com?subject=Quoth%20feedback">Email the Developer…</a><a class="b" style="text-decoration:none" href="https://github.com/weareaiforfun-hub/quoth/issues/new/choose" target="_blank" rel="noopener noreferrer">Report on GitHub…</a></div>`
+        + `<div class="r cap">Questions, ideas or problems: Email the Developer opens a new message to arian.shafa.analytics@gmail.com with diagnostics included, for you to read and send. Report on GitHub opens a public issue instead (a free GitHub account is needed).</div><div class="r cap">Diagnostics list Quoth's version, your Mac model and macOS version, settings, permissions, and recent engine errors. They never include what you dictated, your dictionary or notes, or your user name.</div>`)
+      + `</div>`;
+  };
+
+  V.setup = () => {
+    const st = S.setup, perm = (k, t, d) => `<div class="r">${S.perms[k] ? circleOK : circleNo}<div class="grow"><div>${t}</div><div class="cap">${d}</div></div>${S.perms[k] ? '' : `<button class="b" type="button" data-act="grant" data-k="${k}">Grant…</button>`}</div>`;
+    let models;
+    if (st.phase === 'ready') {
+      const b = BUNDLES[st.bundle];
+      models = `<div class="r">${circleOK}<div class="grow"><div>Models ready</div><div class="cap">${esc(b[3].split('.')[0])}. Everything runs on this Mac.</div></div><button class="lk" type="button" data-go="models">Change</button></div>`;
+    } else if (st.phase === 'downloading') {
+      const b = BUNDLES[st.bundle], [sp, tx] = b[3].split('.')[0].split(' + ');
+      models = `<div class="r sec2">Downloading the ${b[0]} models (${b[2]}). You can close this window; the download carries on, and continues after a restart.</div>`
+        + [[sp, 0, b[4][0]], [tx, 1, b[4][1]]].map(([n, i, gb]) => `<div class="r col" style="gap:4px"><div style="display:flex;justify-content:space-between"><span>${esc(n)}</span>${st.p[i] >= 1 ? circleOK : ''}</div><div class="pb"><i style="width:${st.p[i] * 100}%"></i></div><span class="cap">${(Math.min(1, st.p[i]) * gb).toFixed(2)} of ${gb.toFixed(1)} GB · demo speed</span></div>`).join('')
+        + `<div class="r" style="justify-content:flex-start;gap:8px"><button class="b" type="button" data-act="setup-pause">${st.timer ? 'Pause' : 'Resume'}</button><button class="b" type="button" data-act="setup-cancel">Cancel</button></div>`;
+    } else {
+      models = `<div class="r sec2">Quoth needs two AI models: one turns your voice into text, the other tidies it up. They download once (from Hugging Face), then everything runs on this Mac, even offline.</div>`
+        + Object.entries(BUNDLES).map(([k, [t, ram, size, sum]]) => `<button class="r top" type="button" data-act="bundle" data-k="${k}" style="width:100%;background:none;border:0;border-top:1px solid var(--w-line);color:inherit;font:inherit;text-align:left;cursor:pointer"><span class="radio${st.bundle === k ? ' on' : ''}"></span><span class="grow"><span>${t} · ${size}</span> ${k === 'standard' ? '<span class="badge">Recommended for this Mac</span>' : ''}<span class="cap" style="display:block">${esc(sum)}</span>${ram > 16 ? `<span class="cap warn" style="display:block">Made for ${ram} GB of memory; this Mac has 16 GB, so it may be slow.</span>` : ''}</span></button>`).join('')
+        + `<div class="r" style="justify-content:flex-start;gap:10px"><button class="b pri" type="button" data-act="setup-dl">Download ${BUNDLES[st.bundle][2]}</button><span class="cap">212 GB free on this Mac</span></div>`
+        + `<div class="r cap" style="justify-content:flex-start;gap:4px">Prefer a cloud service, or already use Ollama? <button class="lk s" type="button" data-go="models">Set it up in Models</button></div>`;
+    }
+    return `<div style="height:20px"></div><div class="form">`
+      + group('', `<div class="r sec2">Two things to set up: the AI models (start the download first; it runs while you do the rest) and three permissions (the fourth, for meeting notes, is optional). This page updates by itself.</div>`)
+      + `<div style="height:18px"></div>` + group('AI models', models)
+      + `<div style="height:18px"></div>` + group('Permissions', perm('mic', 'Microphone', 'To hear you while you hold the hotkey.') + perm('ax', 'Accessibility', 'To paste text into the focused app and check for password fields.')
+        + perm('im', 'Input Monitoring', 'To notice when you hold the hotkey.') + perm('screen', 'Screen &amp; System Audio Recording (optional)', 'Only for meeting notes: records what other participants say. No video is kept.'))
+      + `<div style="height:18px"></div>` + group('Engines', `<div class="r"><span>Speech model</span><span class="sec2">${st.phase === 'ready' ? 'Whisper Large v3 Turbo: Ready' : 'Whisper Large v3 Turbo: not downloaded'}</span></div><div class="r"><span>Language model</span><span class="sec2">${st.phase === 'ready' ? (st.bundle === 'best' ? 'Qwen 2.5 14B' : st.bundle === 'lite' ? 'Qwen 3 4B' : 'Qwen 2.5 7B') + ': Ready' : 'not downloaded'}</span></div>`)
+      + `<div style="height:18px"></div>` + group('Try it', `<div class="r">Click into any text field, hold ${esc(hk())}, say “um so let's meet at two actually three”, and release.</div><div class="r cap">Double-tap the hotkey for hands-free; tap again to stop. Esc cancels. ⌃⌘V pastes the last transcript.</div>`)
+      + `<p class="cap" style="margin:10px 10px 0">In this copy, “Grant…” just ticks the box. On a real Mac, System Settings opens and you switch Quoth on there.</p></div>`;
+  };
+
+  function render() {
+    side.querySelectorAll('[data-sec]').forEach(b => { if (b.dataset.sec === S.section) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+    detail.innerHTML = V[S.section]();
+  }
+
+  // fake download progress for model rows (a few seconds instead of minutes)
+  function fakeDownload(file, done) {
+    S.dl[file] = 0;
+    const t = setInterval(() => {
+      S.dl[file] = Math.min(1, S.dl[file] + .07 + Math.random() * .06);
+      if (S.dl[file] >= 1) { clearInterval(t); delete S.dl[file]; S.installed.add(file); done && done(); }
+      if (S.section === 'models') { const y = detail.scrollTop; render(); detail.scrollTop = y; }
+    }, 280);
+  }
+  function setupTick() {
+    const st = S.setup;
+    st.timer = setInterval(() => {
+      st.p[0] = Math.min(1, st.p[0] + .09); st.p[1] = Math.min(1, st.p[1] + .028);
+      if (st.p[1] >= 1) { clearInterval(st.timer); st.timer = null; st.phase = 'ready'; }
+      if (S.section === 'setup') { const y = detail.scrollTop; render(); detail.scrollTop = y; }
+    }, 300);
+  }
+
+  const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+  const keepScroll = fn => { const y = detail.scrollTop; fn(); render(); detail.scrollTop = y; };
+  detail.addEventListener('click', e => {
+    const goB = e.target.closest('[data-go]'); if (goB) return go(goB.dataset.go);
+    const tgB = e.target.closest('[data-tg]');
+    if (tgB) {
+      const k = tgB.dataset.tg;
+      return keepScroll(() => {
+        if (k === 'autoLearn') S.autoLearn = !S.autoLearn;
+        else if (k.startsWith('polish.')) { const p = k.slice(7); S.polish[p] = !S.polish[p]; }
+        else if (k.startsWith('lab.')) { const p = k.slice(4); if (p === 'quick' || p === 'recent') S.lab[p] = !S.lab[p]; else if (S.lab.picked.has(p)) S.lab.picked.delete(p); else if (S.lab.picked.size < 3) S.lab.picked.add(p); S.lab.done = false; }
+        else S.set[k] = !S.set[k];
+        if (k === 'pillAlways' && D.phase === 'idle') idle();
+        if (k === 'handsFree') talkUI();
+      });
+    }
+    const tone = e.target.closest('[data-tone]');
+    if (tone) { const [c, t] = tone.dataset.tone.split(':'); return keepScroll(() => { S.styles[c] = t; }); }
+    const meet = e.target.closest('[data-meet]');
+    if (meet) return keepScroll(() => { S.meetingSel = meet.dataset.meet; });
+    const b = e.target.closest('[data-act]'); if (!b) return;
+    const id = +b.dataset.id, a = b.dataset.act;
+    const rec = S.history.find(r => r.id === id);
+    const copy = t => { try { navigator.clipboard.writeText(t); toast('Copied.'); } catch (x) { toast('Copied.'); } };
+    switch (a) {
+      case 'toast': return toast(b.dataset.t);
+      case 'hist-clear': return keepScroll(() => { S.history = []; });
+      case 'h-copy': return copy(rec.final);
+      case 'h-copyraw': return copy(rec.raw);
+      case 'h-raw': return keepScroll(() => { S.showRaw.has(id) ? S.showRaw.delete(id) : S.showRaw.add(id); });
+      case 'h-play': return toast('In the app, this plays the recording (kept for 14 days).');
+      case 'h-retry': return toast('In the app, this transcribes the recording again, for example with another model.');
+      case 'h-del': return keepScroll(() => { S.history = S.history.filter(r => r.id !== id); });
+      case 'profile': S.profiling = true; render(); return setTimeout(() => { S.profiling = false; S.profile = 'You write the way you talk to colleagues you like: short, friendly sentences that get to the point quickly. You often open with a quick greeting, use “quick update” and “thanks” a lot, and ask direct questions rather than hinting. (Example profile.)'; if (S.section === 'insights') keepScroll(() => {}); }, 1400);
+      case 'meet-rec': S.recording = !S.recording; buildMenu(); if (S.recording) toast('In the app, this records your mic and the call audio on this Mac.');
+        else { const m = { id: 'm' + (++uid), title: 'Untitled meeting', at: Date.now(), min: 1, status: 'processing', tr: [['00:02', 'Me', 'This is a test of meeting notes.']] };
+          S.meetings.unshift(m); S.meetingSel = m.id; setTimeout(() => { m.status = null; m.title = 'Quick test meeting'; m.notes = [['h', 'Summary'], ['p', 'A short test recording. Nothing was decided.']]; if (S.section === 'meetings') keepScroll(() => {}); }, 2500); }
+        return keepScroll(() => {});
+      case 'ask': { const q = val('ask'); if (!q) return; S.asking = true; render(); return setTimeout(() => { S.asking = false; S.answer = 'In the Weekly product sync you decided to keep the free plan with no paywall for now, and to ship the new onboarding on Tuesday. (Example answer, based on the example meetings.)'; keepScroll(() => {}); }, 1200); }
+      case 'mt-notes': return keepScroll(() => { S.meetingTr = false; });
+      case 'mt-tr': return keepScroll(() => { S.meetingTr = true; });
+      case 'meet-del': return keepScroll(() => { S.meetings = S.meetings.filter(m => m.id !== S.meetingSel); S.meetingSel = null; });
+      case 'd-add': { const w = val('d-word'); if (!w) return; if (S.dict.some(d => d.phrase.toLowerCase() === w.toLowerCase())) { S.err.dict = 'That word is already in your dictionary.'; return keepScroll(() => {}); }
+        S.err.dict = null; return keepScroll(() => { S.dict.push({ id: ++uid, kind: 'word', phrase: w, uses: 0 }); }); }
+      case 'd-addrep': { const sp = val('d-sp'), r = val('d-rep'); if (!sp || !r) { S.err.dict = 'Fill in both fields.'; return keepScroll(() => {}); }
+        S.err.dict = null; return keepScroll(() => { S.dict.push({ id: ++uid, kind: 'rep', phrase: sp, rep: r, uses: 0 }); }); }
+      case 'd-star': return keepScroll(() => { const d = S.dict.find(x => x.id === id); d.star = !d.star; });
+      case 'd-del': return keepScroll(() => { S.dict = S.dict.filter(x => x.id !== id); });
+      case 's-add': { const t = val('s-trig'), x = (document.getElementById('s-exp') || {}).value || '';
+        if (!t || !x.trim()) S.err.snip = 'Fill in a trigger and the text.'; else if (t.length > 60) S.err.snip = 'Trigger: 60 characters at most'; else if (S.snippets.some(s => s.trigger.toLowerCase() === t.toLowerCase())) S.err.snip = 'That trigger exists';
+        else { S.err.snip = null; S.snippets.push({ id: ++uid, trigger: t, exp: x }); }
+        return keepScroll(() => {}); }
+      case 's-del': return keepScroll(() => { S.snippets = S.snippets.filter(s => s.id !== id); });
+      case 'pc-add': return keepScroll(() => { S.polish.custom.push(''); });
+      case 'pc-del': return keepScroll(() => { S.polish.custom.splice(+b.dataset.i, 1); });
+      case 'tr-add': return keepScroll(() => { S.transforms.push({ id: ++uid, name: `Custom ${S.transforms.length + 1}`, instr: '' }); });
+      case 'tr-del': return keepScroll(() => { S.transforms = S.transforms.filter(t => t.id !== id); });
+      case 'm-dl': return fakeDownload(b.dataset.f) || keepScroll(() => {});
+      case 'm-use': return keepScroll(() => { const f = b.dataset.f; if (f.endsWith('.bin')) S.speechModel = f; else S.textModel = f; });
+      case 'lab-k': return keepScroll(() => { S.lab.kind = +b.dataset.k; S.lab.picked = new Set(); S.lab.done = false; });
+      case 'lab-run': S.lab.running = true; S.lab.done = false; keepScroll(() => {}); return setTimeout(() => { S.lab.running = false; S.lab.done = true; if (S.section === 'models') keepScroll(() => {}); }, 1800);
+      case 'mic-up': case 'mic-down': return keepScroll(() => { const i = +b.dataset.i, j = Math.max(0, Math.min(S.mics.length - 1, i + (a === 'mic-up' ? -1 : 1))); [S.mics[i], S.mics[j]] = [S.mics[j], S.mics[i]]; });
+      case 'step': return keepScroll(() => { const k = b.dataset.k, [lo, hi] = k === 'llmLocal' ? [1, 15] : [.5, 10]; S.set[k] = Math.max(lo, Math.min(hi, S.set[k] + +b.dataset.d)); });
+      case 'diag': S.copied = true; keepScroll(() => {}); return setTimeout(() => { S.copied = false; if (S.section === 'settings') keepScroll(() => {}); }, 2000);
+      case 'grant': return keepScroll(() => { S.perms[b.dataset.k] = true; });
+      case 'bundle': return keepScroll(() => { S.setup.bundle = b.dataset.k; });
+      case 'setup-dl': S.setup.phase = 'downloading'; S.setup.p = [0, 0]; setupTick(); return keepScroll(() => {});
+      case 'setup-pause': if (S.setup.timer) { clearInterval(S.setup.timer); S.setup.timer = null; } else setupTick(); return keepScroll(() => {});
+      case 'setup-cancel': clearInterval(S.setup.timer); S.setup.timer = null; S.setup.phase = 'choose'; return keepScroll(() => {});
+    }
+  });
+  detail.addEventListener('change', e => {
+    const p = e.target.closest('[data-pop]'); if (!p) return;
+    const k = p.dataset.pop, v = p.value;
+    keepScroll(() => {
+      if (k === 'languages') S.set.languages = v === 'Auto-detect' ? [] : [v];
+      else if (k in S.set) S.set[k] = v;
+      if (k === 'cleanup') { renderLevel(); buildMenu(); }
+      if (k === 'hotkey') { talkUI(); buildMenu(); }
+    });
+  });
+  detail.addEventListener('input', e => {
+    const t = e.target;
+    if (t.id === 'd-filter') { S.dictFilter = t.value; const y = detail.scrollTop, pos = t.selectionStart; render(); detail.scrollTop = y; const f = document.getElementById('d-filter'); f.focus(); f.setSelectionRange(pos, pos); return; }
+    if (t.dataset.snip) { const s = S.snippets.find(x => x.id === +t.dataset.snip); if (s) s[t.dataset.f] = t.value; }
+    if (t.dataset.tr) { const x = S.transforms.find(y => y.id === +t.dataset.tr); if (x) x[t.dataset.f] = t.value; }
+    if (t.dataset.pc) S.polish.custom[+t.dataset.pc] = t.value;
+  });
+  detail.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    if (e.target.id === 'd-word') detail.querySelector('[data-act="d-add"]').click();
+    if (e.target.id === 'd-rep') detail.querySelector('[data-act="d-addrep"]').click();
+    if (e.target.id === 'ask') detail.querySelector('[data-act="ask"]').click();
+  });
+
+  // downloads (counted in Umami next to the GitHub numbers)
+  document.querySelectorAll('[data-dl]').forEach(a => a.addEventListener('click', () => T('website-download-click', { from: a.dataset.dl })));
+
+  renderApp(); renderChips(); renderLevel(); buildMenu(); idle(); render();
+})();
+</script>
+
+</body>
+</html>
