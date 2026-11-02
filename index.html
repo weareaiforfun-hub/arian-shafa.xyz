@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KOgaJjCJrKdwY044+BBlyZjthIqkAvi1VjYvseO7Wao=' 'sha256-CxHvaERdc0aXKmcjfcFuF1QmSoOZg8q4NUJea69bO5k=' 'sha256-aV7GlLpWHPFI54Pn46Ayqq3GGX4K+nSTDoCtrr4X9dQ=' 'sha256-UQf6EhZKUA0dLUSE5hQgqd5wXX4A5mm/l2Ko3qaeRSc=' https://stats.arian-shafa.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://stats.arian-shafa.xyz; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KOgaJjCJrKdwY044+BBlyZjthIqkAvi1VjYvseO7Wao=' 'sha256-CxHvaERdc0aXKmcjfcFuF1QmSoOZg8q4NUJea69bO5k=' 'sha256-aV7GlLpWHPFI54Pn46Ayqq3GGX4K+nSTDoCtrr4X9dQ=' 'sha256-1dlNWPsHqmmFQadgrxtp6xWZzaN7MzYxkrmrRLNBpLU=' https://stats.arian-shafa.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://stats.arian-shafa.xyz; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(()=>{const q=new URLSearchParams(location.search).get('notrack');if(q===null)return;try{q==='0'?localStorage.removeItem('umami.disabled'):localStorage.setItem('umami.disabled','1');}catch(e){}history.replaceState(null,'',location.pathname+location.hash);})();</script>
 <script defer src="https://stats.arian-shafa.xyz/script.js" data-website-id="337739b6-0b9c-4dc0-a4d5-2a65ee574b85" data-domains="arian-shafa.xyz" data-exclude-search="true" data-performance="true"></script>
+<script defer src="https://stats.arian-shafa.xyz/recorder.js" data-website-id="337739b6-0b9c-4dc0-a4d5-2a65ee574b85"></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f1420'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%238fb8e8'/%3E%3C/svg%3E">
 <link rel="canonical" href="https://arian-shafa.xyz/">
 <meta property="og:title" content="Arian Shafa · Analytics Engineer">
@@ -516,6 +517,19 @@ footer { padding-block: 26px 40px; color: var(--fg-2); font-size: 13px; display:
       : section === 'writings' ? 'writing-click' : section === 'releases' ? 'release-click' : 'outbound-click';
     T(ev2, { name, host, section });
   }, true);
+
+  // Rage clicks (3+ on the same element within a second), copied text and front-end errors
+  let rEl = null, rT = 0, rN = 0;
+  document.addEventListener('click', ev => {
+    const el = ev.target.closest('a, button'); if (!el) return;
+    const now = Date.now(); rN = el === rEl && now - rT < 1000 ? rN + 1 : 1; rEl = el; rT = now;
+    if (rN === 3) T('rage-click', { label: label(el), section: sectionOf(el) });
+  }, true);
+  document.addEventListener('copy', () => T('copy-text', { section: sectionOf(document.getSelection().anchorNode && document.getSelection().anchorNode.parentElement || document.body) }));
+  let errs = 0;
+  const err = m => { if (errs++ < 5) T('js-error', { message: String(m || 'unknown').slice(0, 120) }); };
+  addEventListener('error', e => { if (e.message) err(e.message); });
+  addEventListener('unhandledrejection', e => err(e.reason && (e.reason.message || e.reason)));
 })();</script>
 </body>
 </html>
