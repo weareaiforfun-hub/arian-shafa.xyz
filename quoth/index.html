@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KOgaJjCJrKdwY044+BBlyZjthIqkAvi1VjYvseO7Wao=' 'sha256-3Z0vGTM2VZ4aG3ETNDIhGktg6Ij5P+WqdNxrMd2JDEs=' https://stats.arian-shafa.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://stats.arian-shafa.xyz; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-KOgaJjCJrKdwY044+BBlyZjthIqkAvi1VjYvseO7Wao=' 'sha256-3Z0vGTM2VZ4aG3ETNDIhGktg6Ij5P+WqdNxrMd2JDEs=' https://stats.arian-shafa.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://stats.arian-shafa.xyz; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(()=>{const q=new URLSearchParams(location.search).get('notrack');if(q===null)return;try{q==='0'?localStorage.removeItem('umami.disabled'):localStorage.setItem('umami.disabled','1');}catch(e){}history.replaceState(null,'',location.pathname+location.hash);})();</script>
@@ -326,6 +326,8 @@ footer { margin-top: clamp(56px, 8vw, 96px); padding-block: 26px 40px; color: va
 <body>
 
 
+<!-- What's new for Quoth (src/whatsnew.js); the button goes in the nav's data-wn-slot. -->
+<script defer src="/whatsnew.js" data-site="quoth" data-slot="[data-wn-slot]"></script>
 <nav class="nav" aria-label="Main">
   <div class="wrap">
     <a class="mark" href="/" aria-label="Arian Shafa, home"><i></i>Arian Shafa</a>
@@ -334,6 +336,7 @@ footer { margin-top: clamp(56px, 8vw, 96px); padding-block: 26px 40px; color: va
       <a href="#app">The app</a>
       <a href="#install" class="opt">Install</a>
       <a href="https://github.com/weareaiforfun-hub/quoth" target="_blank" rel="noopener noreferrer" class="opt">GitHub ↗</a>
+      <span data-wn-slot></span>
       <button class="toggle" id="theme-toggle" type="button" aria-label="Switch to light theme">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
       </button>
