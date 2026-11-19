@@ -18,7 +18,7 @@
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const day = iso => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-  const KIND = { launch: 'Launch', new: 'New', update: 'Update', fix: 'Fix' };
+  const KIND = { launch: 'Launch', new: 'Update', update: 'Update', fix: 'Fix' };
   const track = (action, id) => { try { window.umami && umami.track('whats-new', { action, id: id || '' }); } catch (e) {} };
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } };
   const save = v => { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} };
@@ -76,7 +76,7 @@
       .it.flash { background: var(--bg2); }
       .meta { display: flex; gap: 8px; align-items: center; font-size: 12px; color: var(--fg2); }
       .pill { font-size: 11px; padding: 0 7px; border-radius: 99px; border: 1px solid var(--line); }
-      .pill.k-new, .pill.k-launch { background: var(--acc); border-color: var(--acc); color: var(--on); }
+      .pill.k-launch { background: var(--acc); border-color: var(--acc); color: var(--on); }
       .it h3 { margin: 0; font-size: 14.5px; font-weight: 600; line-height: 1.35; }
       .it p { margin: 0; color: var(--fg2); }
       .it:not(.open) p { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
