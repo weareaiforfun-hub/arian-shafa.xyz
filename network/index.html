@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-KOgaJjCJrKdwY044+BBlyZjthIqkAvi1VjYvseO7Wao=' 'sha256-HcuyudxqlffFWvvPNbU34IyoAHBTiavNuhxk1hrJ36w=' 'sha256-ZcMaQXcnQ1Qn+xsJwc1RXlcwpE49JZOY+fdBNFzI/1E=' https://stats.arian-shafa.xyz; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://stats.arian-shafa.xyz; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'; manifest-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>(()=>{const q=new URLSearchParams(location.search).get('notrack');if(q===null)return;try{q==='0'?localStorage.removeItem('umami.disabled'):localStorage.setItem('umami.disabled','1');}catch(e){}history.replaceState(null,'',location.pathname+location.hash);})();</script>
+<script>window.keepCampaignTags=(type,p)=>{if(!p)return p;const clean=(v,keep)=>{if(!v||!v.includes('?'))return v;const[base,query]=v.split('?');const q=new URLSearchParams(query);const k=new URLSearchParams();if(keep)q.forEach((val,n)=>{if(/^utm_(source|medium|campaign|content|term)$/.test(n))k.append(n,val);});const out=k.toString();return out?base+'?'+out:base;};try{p.url=clean(p.url,true);p.referrer=clean(p.referrer,false);}catch(e){return{...p,url:String(p.url).split('?')[0],referrer:String(p.referrer||'').split('?')[0]};}return p;};</script>
+<script defer src="https://stats.arian-shafa.xyz/script.js" data-website-id="337739b6-0b9c-4dc0-a4d5-2a65ee574b85" data-domains="arian-shafa.xyz" data-before-send="keepCampaignTags" data-performance="true"></script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230f1420'/%3E%3Ccircle cx='16' cy='16' r='6' fill='%238fb8e8'/%3E%3C/svg%3E">
+<link rel="canonical" href="https://arian-shafa.xyz/network/">
+<meta property="og:title" content="Network · who do I know, and who could help?">
+<meta property="og:description" content="A personal tool that maps a network by closeness and field. Try it with a made-up network: no real names.">
+<meta property="og:url" content="https://arian-shafa.xyz/network/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://arian-shafa.xyz/og-home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Arian Shafa, analytics engineer in Amsterdam">
+<meta property="og:site_name" content="Arian Shafa">
+<meta name="twitter:card" content="summary_large_image">
+<title>Network · a map of who I know, with a made-up demo</title>
+<meta name="description" content="A personal tool that maps my network by closeness and field and finds who could help a friend get a job. Try it with a made-up network of 900 people: no real names, nothing leaves the page.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Same tokens as the homepage and the Quoth page. Dark only: the field colours are tuned for it. */
+:root {
+  --bg: #0c1016; --bg-2: #121823; --bg-3: #0f141d; --line: #222b39; --line-2: #2a3446; --fg: #e7ecf3; --fg-2: #9aa6b8; --accent: #8fb8de; --warm: #d8c19c;
+  --on: #13261d; --on-line: #3f6f5a; --dim: #273141; --coral: #F0A27F;
+  --shadow: 0 18px 50px rgb(0 0 0 / .35);
+  --f-display: 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --f-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --nav-h: 60px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 130px; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+a { color: var(--accent); }
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1180px; margin-inline: auto; padding-inline: clamp(16px, 4vw, 32px); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-2); margin: 0; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 400; margin: 0; letter-spacing: -.01em; text-wrap: balance; }
+p { margin: 0; }
+.muted { color: var(--fg-2); }
+.small { font-size: 13.5px; }
+
+.nav { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: var(--nav-h); }
+.mark { display: flex; align-items: center; gap: 10px; font-family: var(--f-display); font-size: 20px; color: var(--fg); text-decoration: none; }
+.mark i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+.links { display: flex; gap: 22px; font-size: 14px; }
+.links a { color: var(--fg-2); text-decoration: none; }
+.links a:hover { color: var(--fg); }
+
+.hero { padding-block: clamp(44px, 8vw, 88px) clamp(28px, 4vw, 44px); position: relative; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 22px 22px; mask-image: radial-gradient(ellipse 70% 80% at 85% 30%, #000 0%, transparent 70%); -webkit-mask-image: radial-gradient(ellipse 70% 80% at 85% 30%, #000 0%, transparent 70%); pointer-events: none; }
+.hero .wrap { position: relative; }
+.hero h1 { font-size: clamp(48px, 8vw, 84px); line-height: 1; margin-top: 14px; }
+.lede { font-family: var(--f-display); font-size: clamp(23px, 2.6vw, 30px); line-height: 1.3; margin-top: 20px; max-width: 32ch; }
+.lede em { color: var(--accent); }
+.bio { color: var(--fg-2); margin-top: 16px; max-width: 62ch; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.btn { display: inline-flex; align-items: center; min-height: 44px; gap: 8px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--line); text-decoration: none; font-size: 15px; font-weight: 500; background: var(--bg-2); color: var(--fg); }
+.btn:hover { border-color: var(--fg-2); }
+.btn.primary { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.note { font-family: var(--f-mono); font-size: 12.5px; color: var(--fg-2); margin-top: 16px; }
+
+section.block { padding-block: clamp(36px, 6vw, 64px); border-top: 1px solid var(--line); }
+section.block h2 { font-size: clamp(30px, 4vw, 38px); line-height: 1.15; margin-top: 10px; }
+section.block > .wrap > p.muted { margin-top: 12px; max-width: 72ch; }
+
+/* sticky helpers under the nav: the section menu (phones) and the filter bar */
+.subbar { position: sticky; top: var(--nav-h); z-index: 25; }
+.jump { display: none; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.jump::-webkit-scrollbar { display: none; }
+.jump a { flex: 0 0 auto; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line-2); background: rgb(18 24 35 / .96); color: var(--fg); text-decoration: none; font-size: 13.5px; }
+.fbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 9px 14px; background: rgb(18 24 35 / .97); border: 1px solid var(--line-2); border-radius: 14px; box-shadow: 0 10px 30px rgb(0 0 0 / .35); margin-block: 8px; }
+.fbar[hidden] { display: none; }
+.fcount { font-size: 14px; color: var(--fg-2); }
+.fcount b { font-family: var(--f-display); font-weight: 400; font-size: 20px; color: var(--fg); }
+.pill { min-height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--on-line); background: var(--on); font-size: 13px; }
+.fbar .push { margin-left: auto; display: flex; gap: 14px; font-size: 14px; }
+.linkbtn { border: 0; background: none; color: var(--accent); padding: 0; font-size: 14px; }
+
+.stack { display: flex; flex-direction: column; gap: 20px; padding-bottom: 8px; }
+.tile { background: var(--bg-2); border: 1px solid var(--line); border-radius: 18px; padding: 22px; min-width: 0; }
+.tile h3 { font-size: 26px; line-height: 1.2; }
+.tile h3 small { font-family: var(--f-body); font-size: 13px; color: var(--fg-2); }
+.tile .sub { margin-top: 4px; font-size: 14px; color: var(--fg-2); }
+.row2 { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr)); gap: 20px; }
+
+.metrics { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.metrics + .metrics { margin-top: 8px; }
+.chip { text-align: left; min-height: 64px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--line); background: transparent; }
+.chip b { display: block; font-family: var(--f-display); font-weight: 400; font-size: 28px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.chip span { display: block; font-size: 12.5px; color: var(--fg-2); line-height: 1.3; }
+.chip[aria-pressed="true"] { border-color: var(--on-line); background: var(--on); }
+.chip:hover { border-color: var(--line-2); }
+
+.askrow { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.askrow input { flex: 1 1 260px; min-width: 0; min-height: 46px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--bg-3); font-size: 16px; }
+.askrow button { min-height: 46px; padding: 0 16px; border-radius: 12px; border: 1px solid var(--line-2); background: #1a2230; }
+.examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.examples button { min-height: 38px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; color: #c9d2de; font-size: 14px; }
+.summary { margin: 16px 0 10px; font-size: 14px; color: var(--fg-2); }
+.results { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
+.card { border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; background: var(--bg-3); min-width: 0; }
+.card .t { margin-top: 8px; font-size: 15px; }
+.card .o { font-size: 14px; color: var(--fg-2); }
+.card .why { margin-top: 8px; font-size: 13.5px; color: var(--fg-2); }
+.card .ask { margin-top: 4px; font-size: 13.5px; color: var(--warm); }
+.who { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.dot { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+.redact { display: inline-block; width: 104px; height: 13px; border-radius: 4px; background: repeating-linear-gradient(135deg, #2c3646 0 6px, #252e3c 6px 12px); flex: 0 0 auto; }
+.band { font-size: 12px; padding: 1px 9px; border-radius: 999px; background: #1a2230; border: 1px solid var(--line-2); }
+.band.dormant { color: var(--coral); }
+
+.rings-tile { flex: 1 1 560px; }
+.rings { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1 / 1; margin: 16px auto 0; cursor: pointer; -webkit-user-select: none; user-select: none; }
+.rings i { position: absolute; border-radius: 50%; pointer-events: none; }
+.rings .ring { border: 1px solid #1f2836; }
+.rings .me { left: 47%; top: 47%; width: 6%; height: 6%; background: var(--fg); color: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; font-style: normal; }
+.rings .hov { width: 3%; height: 3%; background: #fff; display: none; }
+.rings .peer { width: 1.8%; height: 1.8%; box-shadow: 0 0 0 2px #fff; }
+@media (hover: none) { .rings { touch-action: none; } }
+.readout { margin-top: 14px; min-height: 80px; position: relative; font-size: 14px; }
+.readout .t { margin-top: 6px; font-size: 15.5px; }
+.readout .x { position: absolute; top: -4px; right: -4px; width: 40px; height: 40px; border: 0; border-radius: 50%; background: transparent; color: var(--fg-2); font-size: 22px; display: none; }
+.readout.kept .x { display: block; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.tags span { font-size: 12px; padding: 1px 9px; border-radius: 999px; background: #1b2a3d; color: #c4dcf2; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; font-size: 13px; color: var(--fg-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+.ctx-tile { flex: 1 1 340px; }
+.ctx { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+.ctx button { text-align: left; padding: 8px 10px; border-radius: 10px; border: 1px solid transparent; background: transparent; }
+.ctx button[aria-pressed="true"] { border-color: var(--on-line); background: var(--on); }
+.ctx .l { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
+.ctx .bar { display: block; height: 6px; margin-top: 6px; border-radius: 3px; background: #1a2230; overflow: hidden; }
+.ctx .bar i { display: block; height: 100%; background: #3987e5; }
+
+.heat { display: flex; flex-direction: column; gap: 3px; margin-top: 12px; }
+.heat .hr { display: grid; grid-template-columns: 170px repeat(6, minmax(0, 1fr)); gap: 3px; }
+.heat button { padding: 9px 2px; border: 0; border-radius: 6px; background: transparent; font-size: 13px; font-variant-numeric: tabular-nums; }
+.heat .hh { color: var(--fg-2); font-size: 12.5px; padding: 6px 2px; }
+.heat .rh { text-align: left; font-weight: 500; padding: 6px 4px; }
+.heat .cell[aria-pressed="true"] { outline: 2px solid var(--fg); outline-offset: -2px; }
+.sm { display: none; }
+
+.plist { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0 24px; margin-top: 8px; }
+.person { padding: 9px 0; border-top: 1px solid #1d2532; min-width: 0; }
+.person .who .redact { width: 96px; height: 12px; }
+.person .bl { font-size: 11.5px; color: var(--fg-2); }
+.person .t { font-size: 14px; margin-top: 3px; }
+.person .t span { color: var(--fg-2); }
+.more { margin-top: 10px; min-height: 40px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line-2); background: #1a2230; font-size: 14px; }
+
+.scatter { position: relative; height: 200px; border-left: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); margin: 10px 0 26px 8px; }
+.scatter i { position: absolute; border-radius: 50%; margin: 0 0 -3px -3px; }
+.scatter .ax { position: absolute; font-size: 11.5px; color: var(--fg-2); font-style: normal; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 8px; }
+.tabs button { min-height: 38px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line-2); background: transparent; font-size: 13.5px; }
+.tabs button[aria-pressed="true"] { border-color: var(--accent); background: #1b2a3d; }
+.co { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-top: 1px solid #1d2532; font-size: 14px; }
+.co .redact { width: 84px; height: 12px; }
+.co .k { flex: 1; min-width: 0; }
+.co b { font-weight: 500; min-width: 28px; text-align: right; }
+.intro { padding: 10px 0; border-top: 1px solid #1d2532; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.intro .redact { width: 80px; height: 11px; }
+.intro button { min-height: 38px; padding: 0 12px; border-radius: 999px; border: 1px solid var(--line-2); background: #1a2230; font-size: 13px; }
+.intro button.done { border-color: var(--on-line); background: var(--on); }
+
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 28px; }
+.steps div { border-top: 2px solid var(--accent); padding-top: 14px; }
+.steps h3 { font-family: var(--f-body); font-size: 18px; font-weight: 500; margin-top: 6px; }
+.steps p { margin-top: 6px; color: var(--fg-2); font-size: 15px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px 40px; margin-top: 24px; max-width: 980px; color: var(--fg-2); }
+.facts b { color: var(--fg); font-weight: 400; }
+.research { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 40px; }
+.research h3 { font-family: var(--f-body); font-size: 16px; font-weight: 500; }
+.research p { margin-top: 4px; color: var(--fg-2); font-size: 14.5px; }
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 20px; padding: 32px; }
+.cta div { flex: 1 1 420px; min-width: 0; }
+.cta h2 { font-size: 30px; line-height: 1.2; }
+.cta p { margin-top: 8px; color: var(--fg-2); }
+footer { margin-top: clamp(40px, 6vw, 72px); padding-block: 26px 40px; color: var(--fg-2); font-size: 13px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-top: 1px solid var(--line); }
+
+/* -- phones -- */
+@media (max-width: 700px) {
+  .links .opt { display: none; }
+  .subbar { background: linear-gradient(var(--bg) 82%, transparent); padding-block: 8px 10px; }
+  .jump { display: flex; }
+  .fbar { margin-block: 8px 0; padding: 7px 10px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; gap: 8px; }
+  .fbar::-webkit-scrollbar { display: none; }
+  .fbar > * { flex: 0 0 auto; }
+  .fbar .push a { display: none; }
+  .fcount { white-space: nowrap; }
+  .askrow { flex-wrap: nowrap; }
+  .askrow input { flex: 1 1 auto; }
+  .tile h3 small { display: block; margin-top: 2px; }
+  .tile { padding: 16px; border-radius: 14px; }
+  .tile h3 { font-size: 23px; }
+  .metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .metrics.swipe { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: -16px; padding-inline: 16px; }
+  .metrics.swipe::-webkit-scrollbar { display: none; }
+  .metrics.swipe .chip { flex: 0 0 132px; scroll-snap-align: start; }
+  .chip { min-height: 58px; padding: 6px 9px; }
+  .chip b { font-size: 22px; }
+  .chip span { font-size: 12px; }
+  .results { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: -16px; padding: 0 16px 4px; }
+  .results::-webkit-scrollbar { display: none; }
+  .results .card { flex: 0 0 84%; scroll-snap-align: start; }
+  .rings-tile, .ctx-tile { flex-basis: 100%; }
+  .readout.float { position: fixed; left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom, 0px)); z-index: 40; margin: 0; min-height: 0;
+    background: #161d29; border: 1px solid var(--line-2); border-radius: 16px; padding: 14px 46px 14px 16px; box-shadow: 0 18px 50px rgb(0 0 0 / .55); max-height: 45vh; overflow: auto; }
+  .readout.float .x { display: block; top: 6px; right: 6px; }
+  .heat .hr { grid-template-columns: 74px repeat(6, minmax(0, 1fr)); }
+  .heat button { font-size: 12px; padding: 9px 0; }
+  .lg { display: none; } .sm { display: inline; }
+  .cta { padding: 22px; }
+}
+</style>
+</head>
+<body>
+
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="mark" href="/" aria-label="Arian Shafa, home"><i></i>Arian Shafa</a>
+    <div class="links">
+      <a href="#try">Try it</a>
+      <a href="#how" class="opt">How it works</a>
+      <a href="#privacy" class="opt">Privacy</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Personal tool · runs on my own Mac</p>
+    <h1>Network</h1>
+    <p class="lede">Who do I know, how well, and who could <em>help</em>?</p>
+    <p class="bio">I built this to help friends find jobs and to make better use of my network. It reads my LinkedIn export and how often I message people, sorts everyone by closeness and field, and answers questions like “who could introduce a friend to a bank?”</p>
+    <div class="actions">
+      <a class="btn primary" href="#try">Try the demo</a>
+      <a class="btn" href="#privacy">Why there are no names</a>
+    </div>
+    <p class="note">Everything below is a made-up network of 900 people. My real one stays private.</p>
+  </div>
+</header>
+
+<section class="block" id="try" aria-labelledby="try-h">
+  <div class="wrap">
+    <p class="eyebrow">Try it</p>
+    <h2 id="try-h">The whole tool, with invented people</h2>
+    <p class="muted">Job titles are shown; names and employers never are. Each company is described by its kind, like “an agritech start-up”. Click (or tap) any number, place or table cell to filter every view at once.</p>
+  </div>
+
+  <div class="subbar wrap">
+    <nav class="jump" aria-label="Parts of the demo">
+      <a href="#t-ask">Search</a><a href="#t-rings">Rings</a><a href="#t-ctx">Where we met</a><a href="#t-heat">Table</a>
+      <a href="#t-list">People</a><a href="#t-dormant">Catch-up</a><a href="#t-groups">Groups</a><a href="#t-insiders">Insiders</a><a href="#t-intros">Intros</a>
+    </nav>
+    <div class="fbar" id="fbar" hidden>
+      <span class="fcount"><b id="f-n">0</b> of <span id="f-total">0</span> people</span>
+      <span id="f-pills" style="display: contents"></span>
+      <span class="push"><a href="#t-list">List them ↓</a><button class="linkbtn" type="button" data-clear>Clear all</button></span>
+    </div>
+  </div>
+
+  <div class="wrap stack">
+    <div class="tile" id="t-metrics">
+      <div class="metrics" id="m-bands"></div>
+      <div class="metrics swipe" id="m-signals"></div>
+      <p class="small muted" style="margin-top: 12px" id="m-hint">Click numbers to filter every view below; click more to combine, click again to remove.</p>
+    </div>
+
+    <div class="tile" id="t-ask">
+      <h3>Who could help?</h3>
+      <p class="sub">A friend's job search, a topic, a kind of company. Type anything.</p>
+      <div class="askrow">
+        <label class="sr" for="ask">Ask</label>
+        <input id="ask" type="search" autocomplete="off" enterkeyhint="search" placeholder="e.g. BI analyst at a bank, UX, partnership">
+        <button type="button" id="ask-clear">Clear</button>
+      </div>
+      <div class="examples" id="examples"></div>
+      <div id="ask-out"></div>
+    </div>
+
+    <div class="row2">
+      <div class="tile rings-tile" id="t-rings">
+        <h3>Rings of closeness <small>one dot per person, coloured by field</small></h3>
+        <div class="rings" id="rings" role="img" aria-label="A made-up network drawn as rings of closeness"></div>
+        <div class="readout" id="readout" aria-live="polite"></div>
+        <div class="legend" id="legend"></div>
+        <p class="small muted" style="margin-top: 8px">Rings, inside out: close, active, dormant strong, known, weak.</p>
+      </div>
+      <div class="tile ctx-tile" id="t-ctx">
+        <h3>Where we met</h3>
+        <p class="sub">From the date we connected, against my own jobs and studies. Click places to filter.</p>
+        <div class="ctx" id="ctx"></div>
+      </div>
+    </div>
+
+    <div class="tile" id="t-heat">
+      <h3>Who could help with what <small>field × seniority, from job titles</small></h3>
+      <p class="sub">Click numbers, row names or column names to filter; click again to remove.</p>
+      <div class="heat" id="heat"></div>
+    </div>
+
+    <div class="tile" id="t-list">
+      <h3>People in this view <small id="list-n"></small></h3>
+      <div id="list"></div>
+    </div>
+
+    <div class="grid2">
+      <div class="tile" id="t-dormant">
+        <h3>Worth a catch-up</h3>
+        <p class="sub">People I used to talk to a lot and haven't in a while: the coral dots. Old ties reconnect fast and bring fresh news.</p>
+        <div class="scatter" id="scatter" aria-hidden="true"></div>
+        <div id="dormant"></div>
+      </div>
+      <div class="tile" id="t-groups">
+        <h3>Putting my network to use</h3>
+        <div class="tabs" id="g-tabs"></div>
+        <p class="sub" id="g-ask" style="margin: 0 0 6px"></p>
+        <div id="g-people"></div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="tile" id="t-insiders">
+        <h3>Where I have insiders</h3>
+        <p class="sub" style="margin-bottom: 8px">Companies stay unnamed here; the real tool also shows these next to every job lead.</p>
+        <div id="insiders"></div>
+      </div>
+      <div class="tile" id="t-intros">
+        <h3>Intros</h3>
+        <p class="sub" style="margin-bottom: 8px">Introductions I make for friends, logged from a shortlist and kept up to date. Try moving one along.</p>
+        <div id="intros"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="how" aria-labelledby="how-h">
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2 id="how-h">From an export to an introduction</h2>
+    <div class="steps">
+      <div><p class="eyebrow">01</p><h3>Export</h3><p>LinkedIn lets you download your own connections and messages. WhatsApp adds how often we talk, never what we say.</p></div>
+      <div><p class="eyebrow">02</p><h3>Sort</h3><p>Everyone gets a closeness ring, a field and seniority from their title, and a guess at where we met.</p></div>
+      <div><p class="eyebrow">03</p><h3>Ask</h3><p>Type a role, company or topic for a shortlist: a couple of close friends first, then the best of the wider circle.</p></div>
+      <div><p class="eyebrow">04</p><h3>Introduce</h3><p>Each match comes with a suggested ask. Log the intro and keep track of how it went.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="privacy" aria-labelledby="privacy-h">
+  <div class="wrap">
+    <p class="eyebrow">Privacy</p>
+    <h2 id="privacy-h">Why there are no names here</h2>
+    <div class="facts">
+      <p><b>My contacts didn't sign up for a website.</b> Their names, employers and how close we are stay with me.</p>
+      <p><b>It runs on my own Mac.</b> The data never goes to a server or an AI service.</p>
+      <p><b>Counts, not content.</b> It sees how often I message someone, never what we said.</p>
+      <p><b>This demo is invented.</b> Every person is generated in your browser, and nothing you click leaves this page.</p>
+    </div>
+    <div class="research">
+      <div><h3>Weak ties carry news</h3><p>Job news often comes from acquaintances, not close friends. Granovetter, 1973.</p></div>
+      <div><h3>Moderately weak ties move careers</h3><p>A large LinkedIn experiment found they helped job moves most. Rajkumar et al., 2022.</p></div>
+      <div><h3>Dormant ties are worth a call</h3><p>Old contacts reconnect quickly and bring fresh ideas. Levin, Walter &amp; Murnighan, 2011.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="contact" aria-labelledby="contact-h" style="border-top: 0; padding-top: 8px">
+  <div class="wrap">
+    <div class="cta">
+      <div>
+        <h2 id="contact-h">Want this for your own network?</h2>
+        <p>Want to collaborate on it, or have ideas to make it better? I'd love to hear from you.</p>
+      </div>
+      <a class="btn primary" data-umami-event="network-contact" href="mailto:arian.shafa.analytics@gmail.com?subject=Your%20network%20tool">Ask me a question</a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap"><footer><span>© 2026 Arian Shafa · the demo uses invented people only</span><a class="mono" href="/" style="text-decoration: none; color: var(--fg-2)">arian-shafa.xyz</a></footer></div>
+
+<script>
+(() => {
+const FIELDS = [
+  {k: "data", label: "Data & AI", sm: "Data", c: "#3987e5", n: 150, titles: [["Data Intern", "Junior Data Analyst"], ["Data Analyst", "BI Developer", "Data Engineer", "Analytics Engineer"], ["Senior Data Analyst", "Senior Data Engineer", "Senior Data Scientist"], ["Analytics Lead", "Data Team Lead", "BI Manager"], ["Head of Data", "Director of Analytics"], ["Chief Data Officer"]]},
+  {k: "finance", label: "Finance & risk", sm: "Finance", c: "#d95926", n: 46, titles: [["Finance Intern"], ["Financial Analyst", "Controller", "Risk Analyst"], ["Senior Controller", "Senior Risk Analyst"], ["Finance Manager", "FP&A Lead"], ["Head of Finance", "Finance Director"], ["CFO"]]},
+  {k: "eng", label: "Engineering & IT", sm: "Eng & IT", c: "#199e70", n: 110, titles: [["Engineering Intern"], ["Software Engineer", "Cloud Engineer", "DevOps Engineer"], ["Senior Software Engineer", "Senior Backend Engineer"], ["Tech Lead", "Engineering Manager"], ["Head of Engineering"], ["CTO"]]},
+  {k: "product", label: "Product & design", sm: "Product", c: "#c98500", n: 42, titles: [["Design Intern"], ["Product Owner", "UX Designer", "Product Designer"], ["Senior Product Owner", "Senior UX Researcher"], ["Product Manager", "Design Lead"], ["Head of Product"], ["Chief Product Officer"]]},
+  {k: "hr", label: "Recruitment & HR", sm: "HR", c: "#d55181", n: 70, titles: [["HR Intern"], ["Recruiter", "Talent Sourcer", "HR Advisor"], ["Senior Recruiter", "Senior Tech Recruiter"], ["Talent Acquisition Lead", "HR Manager"], ["Head of People"], ["Chief People Officer"]]},
+  {k: "consulting", label: "Consulting & strategy", sm: "Consulting", c: "#2f9e3a", n: 175, titles: [["Consulting Intern"], ["Consultant", "Business Analyst"], ["Senior Consultant", "Senior Sustainability Consultant"], ["Manager", "Engagement Manager"], ["Director", "Partner"], ["Managing Partner"]]},
+  {k: "sales", label: "Sales, marketing & ops", sm: "Sales & ops", c: "#9085e9", n: 105, titles: [["Marketing Intern"], ["Account Manager", "Marketing Specialist", "Business Developer"], ["Senior Account Manager", "Partnerships Manager"], ["Sales Manager", "Marketing Lead"], ["Head of Sales", "Commercial Director"], ["Chief Commercial Officer"]]},
+  {k: "founders", label: "Founders & execs", sm: "Founders", c: "#e66767", n: 80, titles: [["Founder"], ["Founder"], ["Founder"], ["Co-founder"], ["Co-founder & CEO"], ["Founder & CEO", "Co-founder & CTO"]]},
+  {k: "other", label: "Research & other", sm: "Other", c: "#5B6B85", n: 122, titles: [["Student", "PhD Candidate"], ["Researcher", "Teacher", "Policy Advisor"], ["Senior Researcher", "Lecturer"], ["Programme Manager"], ["Professor"], ["Director"]]}
+];
+const FIELD = Object.fromEntries(FIELDS.map(f => [f.k, f]));
+const LEVELS = ["Junior / intern", "Medior", "Senior", "Lead / manager", "Head / director", "Founder / exec"];
+const LEVELS_SM = ["Jr", "Med", "Sr", "Lead", "Head", "Exec"];
+const BANDS = [
+  {k: "close", label: "Close", r: [16, 46], share: 0.025, reach: 1},
+  {k: "active", label: "Active", r: [52, 96], share: 0.07, reach: 0.85},
+  {k: "dormant", label: "Dormant strong", r: [102, 128], share: 0.03, reach: 0.75},
+  {k: "known", label: "Known", r: [134, 178], share: 0.235, reach: 0.6},
+  {k: "weak", label: "Weak", r: [184, 236], share: 0.64, reach: 0.45}
+];
+const BAND = Object.fromEntries(BANDS.map(b => [b.k, b]));
+const SECTORS = [
+  {k: "bank", types: ["a Dutch bank", "an international bank", "an insurer"]},
+  {k: "tech", types: ["a scale-up", "a software company", "an agritech start-up", "a payments company", "a mapping company"]},
+  {k: "consultancy", types: ["a big consultancy", "a boutique consultancy", "an accounting firm"]},
+  {k: "public", types: ["a ministry", "a city council", "a university"]},
+  {k: "retail", types: ["a retailer", "a food company"]},
+  {k: "health", types: ["a hospital", "a health-tech start-up"]},
+  {k: "energy", types: ["an energy company", "a climate start-up"]},
+  {k: "staffing", types: ["a recruitment agency", "a staffing firm"]}
+];
+const CONTEXTS = [
+  {label: "University · 2017–19", w: 0.04, work: false}, {label: "Student job · 2018–22", w: 0.06, work: true},
+  {label: "First job · 2022", w: 0.16, work: true}, {label: "Consultancy · 2022–23", w: 0.28, work: true},
+  {label: "Start-up · 2023–25", w: 0.22, work: true}, {label: "Current job · 2025–now", w: 0.17, work: true},
+  {label: "Not yet known", w: 0.07, work: false}
+];
+const SIGNALS = [
+  {k: "wa", label: "WhatsApp linked", test: p => p.w > 0},
+  {k: "recent", label: "In touch this year", test: p => p.y !== null && p.y <= 1},
+  {k: "vouch", label: "Have seen my work", test: p => p.g.vouch},
+  {k: "hire", label: "Could hire", test: p => p.g.hire},
+  {k: "rec", label: "Recruiters & agencies", test: p => p.g.rec},
+  {k: "peer", label: "Peers in my field", test: p => p.g.peer}
+];
+const SIGNAL = Object.fromEntries(SIGNALS.map(s => [s.k, s]));
+const GROUPS = [
+  {k: "vouch", label: "Have seen my work", ask: "Ask who they know with a data backlog, and for a written recommendation."},
+  {k: "hire", label: "Could hire", ask: "Senior people at companies that buy data work: ask about their team's plans."},
+  {k: "rec", label: "Recruiters & agencies", ask: "Ask what they're seeing in the market, and pass on friends' CVs."},
+  {k: "peer", label: "Peers in my field", ask: "Swap leads, overflow work and tips."}
+];
+const TAGS = ["climbing", "music", "running", "chess", "photography", "cycling"];
+const TOPICS = [
+  ["ux", "ui", "user", "usability", "design", "designer", "researcher", "product"],
+  ["partnership", "partnerships", "business", "developer", "alliance", "account"],
+  ["bank", "banking", "insurer", "finance", "financial", "risk"],
+  ["data", "analyst", "analytics", "bi", "scientist"],
+  ["recruiter", "recruitment", "talent", "hr", "people", "sourcer", "agency"],
+  ["sustainability", "climate", "energy"],
+  ["startup", "start-up", "founder", "co-founder", "scale-up"],
+  ["engineering", "engineer", "software", "developer", "cloud", "devops"],
+  ["marketing", "brand", "sales", "commercial"],
+  ["teacher", "lecturer", "professor", "researcher", "university", "research"],
+  ["health", "hospital", "health-tech"],
+  ["government", "ministry", "council", "policy", "public"]
+];
+const STOP = new Set("a an the at in for of and or to with who someone people person like likes into my me i job jobs role roles friend".split(" "));
+const EXAMPLES = ["BI analyst at a bank", "UX", "partnership", "climate", "people who like climbing"];
+const STATUSES = ["planned", "asked", "introduced", "met", "hired"];
+const DIM = "#273141";
+const TOUCH = matchMedia("(hover: none)").matches;
+
+// ---- a made-up network, the same on every visit ----
+function rng(seed) {
+  return () => {
+    seed = seed + 0x6D2B79F5 | 0;
+    let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+const R = rng(7);
+const pick = list => list[Math.floor(R() * list.length)];
+const weighted = items => { let u = R(), c = 0; for (const it of items) { c += it.w; if (u < c) return it; } return items[items.length - 1]; };
+const between = (a, b) => a + (b - a) * R();
+const net = (() => {
+  const total = FIELDS.reduce((s, f) => s + f.n, 0);
+  const LV = [{v: 0, w: 0.06}, {v: 1, w: 0.42}, {v: 2, w: 0.14}, {v: 3, w: 0.21}, {v: 4, w: 0.08}, {v: 5, w: 0.09}];
+  const HOME = {finance: "bank", hr: "staffing", consulting: "consultancy", other: "public"};
+  let acc = -Math.PI / 2;
+  const out = [];
+  FIELDS.forEach(f => {
+    const a0 = acc, a1 = acc + 2 * Math.PI * f.n / total;
+    acc = a1;
+    for (let i = 0; i < f.n; i++) {
+      const u = R();
+      let b = BANDS[BANDS.length - 1], cum = 0;
+      for (const bb of BANDS) { cum += bb.share; if (u < cum) { b = bb; break; } }
+      const pad = Math.min(0.04, (a1 - a0) / 6);
+      const ang = a0 + pad + (a1 - a0 - 2 * pad) * R();
+      const rad = Math.sqrt(b.r[0] * b.r[0] + (b.r[1] * b.r[1] - b.r[0] * b.r[0]) * R());
+      const level = f.k === "founders" ? (R() < 0.8 ? 5 : 4) : weighted(LV).v;
+      const sk = HOME[f.k] && R() < 0.6 ? HOME[f.k] : pick(SECTORS.slice(0, 7)).k;
+      const type = pick(SECTORS.find(s => s.k === sk).types);
+      const company = type + "#" + Math.floor(R() * (sk === "consultancy" ? 4 : 9));
+      const ctx = weighted(CONTEXTS);
+      const m = b.k === "close" ? Math.round(between(300, 2000)) : b.k === "active" ? Math.round(between(60, 400))
+        : b.k === "dormant" ? Math.round(between(80, 600)) : b.k === "known" ? Math.round(between(2, 40)) : (R() < 0.3 ? Math.round(between(1, 3)) : 0);
+      const y = b.k === "close" ? between(0, 0.08) : b.k === "active" ? between(0, 0.6) : b.k === "dormant" ? between(2, 6.5)
+        : b.k === "known" ? between(0.3, 4) : (m ? between(1, 7.5) : null);
+      const w = (b.k === "close" || b.k === "active") && R() < 0.7 ? Math.round(m * between(0.3, 0.9)) : 0;
+      const r = R();
+      const p = {f: f.k, c: f.c, band: b.k, level, title: pick(f.titles[level]), org: type, company, sector: sk, ctx: ctx.label, m, y, w, r,
+                 tags: r > 0.975 ? [TAGS[Math.floor(R() * TAGS.length)]] : [],
+                 x: 50 + 50 * rad * Math.cos(ang) / 240, yy: 50 + 50 * rad * Math.sin(ang) / 240};
+      p.g = {vouch: ctx.work && (b.k !== "weak" || r < 0.08) && f.k !== "hr",
+             hire: level >= 3 && ["bank", "tech", "retail", "health", "energy", "public"].includes(sk),
+             rec: f.k === "hr" || sk === "staffing",
+             peer: f.k === "data" && level >= 1 && level <= 2 && r < 0.12};
+      p.words = (p.title + " " + p.org).toLowerCase().split(/[^a-z0-9&-]+/).filter(Boolean);
+      out.push(p);
+    }
+  });
+  return out;
+})();
+
+// ---- state ----
+const st = {band: new Set(), signal: new Set(), context: new Set(), cell: new Set(), ask: "", hover: null, pinned: null, touching: false,
+            group: "vouch", intros: [1, 2, 0, 3], listMore: false};
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, m => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[m]));
+const active = () => st.band.size || st.signal.size || st.context.size || st.cell.size;
+function passes(p, except) {
+  if (except !== "band" && st.band.size && !st.band.has(p.band)) return false;
+  if (except !== "context" && st.context.size && !st.context.has(p.ctx)) return false;
+  if (except !== "cell" && st.cell.size && !st.cell.has(p.f + ":" + p.level)) return false;
+  if (except !== "signal") for (const s of st.signal) if (!SIGNAL[s].test(p)) return false;
+  return true;
+}
+function toggle(set, keys) { const all = keys.every(k => set.has(k)); keys.forEach(k => all ? set.delete(k) : set.add(k)); }
+const when = y => y === null ? "no messages yet" : y < 0.08 ? "last contact this week" : y < 0.25 ? "last contact this month"
+  : y < 1 ? "last contact this year" : "last contact " + Math.round(y) + " years ago";
+const sortClose = (a, b) => BAND[b.band].reach - BAND[a.band].reach || b.m - a.m;
+const redact = (cls = "") => `<span class="redact ${cls}" role="img" aria-label="Name hidden"></span>`;
+const personRow = p => `<div class="person"><div class="who"><span class="dot" style="background:${p.c}"></span>${redact()}<span class="bl">${BAND[p.band].label}</span></div>
+  <div class="t">${esc(p.title)} <span>· ${esc(p.org)}</span></div></div>`;
+
+// ---- search ----
+const fit = (q, w) => w === q || (q.length >= 4 && w.startsWith(q.slice(0, Math.max(4, q.length - 2))) && w.length - q.length <= 5);
+function suggest(p) {
+  if (p.band === "dormant") return "Catch up first, then ask for a 20-minute chat.";
+  if (p.g.rec) return "Pass on the CV with your recommendation.";
+  if (p.level >= 3) return "Ask for a 20-minute chat about their team.";
+  return "Ask who they'd talk to at " + p.org.replace(/^an? /, "the ") + ".";
+}
+let askCache = {text: null, out: null};
+function search() {
+  if (askCache.text === st.ask) return askCache.out;
+  const literal = st.ask.toLowerCase().split(/[^a-z0-9&-]+/).filter(w => w.length >= 2 && !STOP.has(w));
+  let out = null;
+  if (literal.length) {
+    const related = new Set();
+    TOPICS.forEach(t => { if (literal.some(q => t.some(w => fit(q, w)))) t.forEach(w => { if (!literal.includes(w)) related.add(w); }); });
+    const scored = [];
+    net.forEach((p, i) => {
+      const own = literal.filter(q => p.words.some(w => fit(q, w)));
+      const rel = [...related].filter(q => p.words.includes(q));
+      const tag = literal.filter(q => p.tags.some(t => fit(q, t)));
+      if (!own.length && !rel.length && !tag.length) return;
+      const base = tag.length ? 1.6 : own.length ? 1.5 + 0.25 * (own.length - 1) : 1.1;
+      scored.push({i, p, own: own.length + tag.length, score: base * BAND[p.band].reach * (1 + 0.1 * p.level),
+                   why: tag.length ? "you tagged: " + tag.join(", ") : "title says " + [...own, ...rel].slice(0, 3).join(", ")});
+    });
+    scored.sort((a, b) => b.own - a.own || b.score - a.score);
+    out = {hits: new Set(scored.map(s => s.i)), results: scored.slice(0, 6), count: scored.length,
+           read: literal.concat(related.size ? ["plus related words"] : []).join(", ")};
+  }
+  askCache = {text: st.ask, out};
+  return out;
+}
+
+// ---- rings: dots are built once, then only recoloured ----
+const rings = $("rings");
+BANDS.forEach(b => { const s = 100 * (b.r[1] + 3) / 240; const e = document.createElement("i"); e.className = "ring";
+  e.style.cssText = `left:${50 - s / 2}%;top:${50 - s / 2}%;width:${s}%;height:${s}%`; rings.appendChild(e); });
+const dotEls = net.map(p => { const e = document.createElement("i"); rings.appendChild(e); return e; });
+const peerLayer = document.createElement("div"); rings.appendChild(peerLayer);
+const hovEl = document.createElement("i"); hovEl.className = "hov"; rings.appendChild(hovEl);
+const me = document.createElement("i"); me.className = "me"; me.textContent = "Me"; rings.appendChild(me);
+$("legend").innerHTML = FIELDS.map(f => `<span><span class="dot" style="background:${f.c}"></span>${f.label}</span>`).join("");
+
+const litMask = net.map(() => true);
+function paintDots() {
+  const ask = search(), narrowed = active() || ask;
+  net.forEach((p, i) => {
+    const lit = passes(p) && (!ask || ask.hits.has(i));
+    litMask[i] = lit;
+    const s = lit ? (narrowed ? 1.45 : 1.15) : 0.8;
+    dotEls[i].style.cssText = `left:${(p.x - s / 2).toFixed(2)}%;top:${(p.yy - s / 2).toFixed(2)}%;width:${s}%;height:${s}%;background:${lit ? p.c : DIM}`;
+  });
+}
+
+const readout = $("readout");
+let ringsInView = true;
+function paintHover() {
+  const cur = st.hover !== null ? net[st.hover] : null;
+  const kept = st.pinned !== null;
+  readout.classList.toggle("kept", kept && !!cur);
+  readout.classList.toggle("float", !!cur && (kept || st.touching) && ringsInView && matchMedia("(max-width: 700px)").matches);
+  peerLayer.innerHTML = "";
+  if (!cur) {
+    hovEl.style.display = "none";
+    readout.innerHTML = `<p class="muted">${TOUCH ? "Slide a finger over the dots to see who's who, and lift it to keep one." : "Move over the dots to see who's who, and click to keep one."} Others at the same company get a white outline.</p>`;
+    return;
+  }
+  hovEl.style.cssText = `display:block;left:${(cur.x - 1.5).toFixed(2)}%;top:${(cur.yy - 1.5).toFixed(2)}%;box-shadow:0 0 0 3px ${cur.c}`;
+  const peers = net.filter((p, i) => i !== st.hover && p.company === cur.company);
+  peerLayer.innerHTML = peers.map(p => `<i class="peer" style="left:${(p.x - 0.9).toFixed(2)}%;top:${(p.yy - 0.9).toFixed(2)}%"></i>`).join("");
+  const facts = [FIELD[cur.f].label, cur.ctx, cur.m ? cur.m + " messages" + (cur.w ? ", " + cur.w + " on WhatsApp" : "") : "", when(cur.y)].filter(Boolean).join(" · ");
+  readout.innerHTML = `<div class="who"><span class="dot" style="background:${cur.c};width:10px;height:10px"></span>${redact()}<span class="band ${cur.band}">${BAND[cur.band].label}</span></div>
+    <p class="t">${esc(cur.title)} <span class="muted">at ${esc(cur.org)}</span></p>
+    <p class="muted">${esc(facts)}</p>
+    <p class="muted">${peers.length ? peers.length + " more at the same company, outlined" : "Nobody else from this company yet"}</p>
+    ${cur.tags.length ? `<div class="tags">${cur.tags.map(t => `<span>${esc(t)}</span>`).join("")}</div>` : ""}
+    <p class="small muted" style="margin-top:6px">${kept ? (TOUCH ? "Kept. Tap empty space or × to let go." : "Kept. Click the dot again, empty space or × to let go.") : (TOUCH ? "Lift your finger to keep this one." : "Click to keep this one.")}</p>
+    <button class="x" type="button" aria-label="Let go" data-unpin>×</button>`;
+}
+function nearest(e, reach) {
+  const rect = rings.getBoundingClientRect();
+  const px = (e.clientX - rect.left) / rect.width * 100, py = (e.clientY - rect.top) / rect.height * 100;
+  let best = null, bd = reach * reach;
+  // Only people the filters and search leave lit can be picked.
+  net.forEach((p, i) => { if (!litMask[i]) return; const dx = p.x - px, dy = p.yy - py, d = dx * dx + dy * dy; if (d < bd) { bd = d; best = i; } });
+  return best;
+}
+let touch = null, skipClick = false;
+rings.addEventListener("pointermove", e => {
+  if (touch) {
+    if (Math.hypot(e.clientX - touch.x, e.clientY - touch.y) > 8) touch.moved = true;
+    const n = nearest(e, 6);
+    if (n !== null && n !== st.hover) { st.hover = n; paintHover(); }
+    return;
+  }
+  if (e.pointerType !== "mouse" || st.pinned !== null) return;
+  const n = nearest(e, 3.2);
+  if (n !== null && n !== st.hover) { st.hover = n; paintHover(); }
+});
+rings.addEventListener("pointerdown", e => {
+  if (e.pointerType === "mouse") return;
+  try { rings.setPointerCapture(e.pointerId); } catch (err) {}
+  const n = nearest(e, 6);
+  touch = {x: e.clientX, y: e.clientY, moved: false, start: n, was: st.pinned};
+  st.touching = true; st.pinned = null;
+  if (n !== null) st.hover = n;
+  paintHover();
+});
+const lift = () => {
+  if (!touch) return;
+  const t = touch; touch = null; skipClick = true; st.touching = false;
+  if (!t.moved && (t.start === null || t.start === t.was)) { st.pinned = null; st.hover = null; }
+  else st.pinned = st.hover;
+  paintHover();
+};
+rings.addEventListener("pointerup", lift);
+rings.addEventListener("pointercancel", lift);
+rings.addEventListener("click", e => {
+  if (skipClick) { skipClick = false; return; }
+  const n = nearest(e, 3.2);
+  if (n === null || n === st.pinned) st.pinned = null;
+  else { st.pinned = n; st.hover = n; }
+  paintHover();
+});
+readout.addEventListener("click", e => { if (e.target.closest("[data-unpin]")) { st.pinned = null; st.hover = null; paintHover(); } });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && st.pinned !== null) { st.pinned = null; paintHover(); } });
+new IntersectionObserver(([en]) => { ringsInView = en.isIntersecting; paintHover(); }, {threshold: 0.15}).observe(rings);
+
+// ---- everything that follows the filters ----
+function chip(attr, key, n, label, on, color) {
+  return `<button type="button" class="chip" ${attr}="${esc(key)}" aria-pressed="${on}"><b${color ? ` style="color:${color}"` : ""}>${n}</b><span>${esc(label)}</span></button>`;
+}
+function paintPanels() {
+  const inView = net.filter(p => passes(p));
+  // filter bar
+  $("fbar").hidden = !active();
+  $("f-n").textContent = inView.length; $("f-total").textContent = net.length;
+  const pills = [...[...st.band].map(k => ["band", k, BAND[k].label]), ...[...st.signal].map(k => ["signal", k, SIGNAL[k].label]),
+    ...[...st.context].map(k => ["context", k, k]), ...(st.cell.size ? [["cell", "*", st.cell.size + " table " + (st.cell.size === 1 ? "cell" : "cells")]] : [])];
+  $("f-pills").innerHTML = pills.map(([d, k, l]) => `<button type="button" class="pill" data-unf="${d}" data-key="${esc(k)}" title="Remove this filter">${esc(l)} ×</button>`).join("");
+  // numbers
+  const bandBase = net.filter(p => passes(p, "band")), sigBase = net.filter(p => passes(p, "signal"));
+  $("m-bands").innerHTML = chip("data-all", "1", inView.length, active() ? "in this view · show all" : "people", !active())
+    + BANDS.map(b => chip("data-band", b.k, bandBase.filter(p => p.band === b.k).length, b.label.toLowerCase(), st.band.has(b.k), b.k === "dormant" ? "var(--coral)" : "")).join("");
+  $("m-signals").innerHTML = SIGNALS.map(s => chip("data-signal", s.k, sigBase.filter(s.test).length, s.label, st.signal.has(s.k))).join("");
+  // where we met
+  const ctxBase = net.filter(p => passes(p, "context"));
+  const maxCtx = Math.max(1, ...CONTEXTS.map(c => net.filter(p => p.ctx === c.label).length));
+  $("ctx").innerHTML = CONTEXTS.map(c => { const n = ctxBase.filter(p => p.ctx === c.label).length;
+    return `<button type="button" data-context="${esc(c.label)}" aria-pressed="${st.context.has(c.label)}"><span class="l"><span>${esc(c.label)}</span><b style="font-weight:500">${n}</b></span>
+      <span class="bar"><i style="width:${(100 * n / maxCtx).toFixed(1)}%;${c.work ? "" : "background:#2A3955"}"></i></span></button>`; }).join("");
+  // field × seniority
+  const cellBase = net.filter(p => passes(p, "cell"));
+  const M = FIELDS.map(f => LEVELS.map((_, j) => cellBase.filter(p => p.f === f.k && p.level === j).length));
+  const maxM = Math.max(1, ...M.flat());
+  $("heat").innerHTML = `<div class="hr"><span></span>${LEVELS.map((l, j) => `<button type="button" class="hh" data-col="${j}" title="Select the whole column: ${l}"><span class="lg">${l}</span><span class="sm">${LEVELS_SM[j]}</span></button>`).join("")}</div>`
+    + FIELDS.map((f, i) => `<div class="hr"><button type="button" class="rh" data-row="${f.k}" title="Select the whole row"><span class="lg">${f.label}</span><span class="sm">${f.sm}</span></button>${M[i].map((v, j) => {
+      const k = f.k + ":" + j, pct = v ? Math.round(14 + 72 * v / maxM) : 0;
+      return `<button type="button" class="cell" data-cell="${k}" aria-pressed="${st.cell.has(k)}" title="${f.label} · ${LEVELS[j]}: ${v} people"
+        style="background:${pct ? `color-mix(in oklab, #3987e5 ${pct}%, #121823)` : "#1a2230"};color:${pct > 52 ? "#fff" : "var(--fg)"}">${v}</button>`; }).join("")}</div>`).join("");
+  // people in this view
+  $("list-n").textContent = active() ? inView.length : "";
+  if (!active()) $("list").innerHTML = `<p class="sub">${TOUCH ? "Tap" : "Click"} any number on top, a place under “Where we met” or cells in the table, and the people appear here.</p>`;
+  else {
+    const list = inView.slice().sort(sortClose), cap = st.listMore ? 120 : 30;
+    $("list").innerHTML = `<div class="plist">${list.slice(0, cap).map(personRow).join("")}</div>`
+      + (list.length > 30 ? `<button type="button" class="more" data-more>${st.listMore ? "Show fewer" : "Show " + (Math.min(list.length, 120) - 30) + " more"}</button>` : "")
+      + (st.listMore && list.length > 120 ? `<p class="small muted" style="margin-top:8px">Showing the 120 closest of ${list.length}.</p>` : "");
+  }
+  // catch-up
+  $("scatter").innerHTML = net.filter(p => p.m > 0 && p.y !== null).map(p => { const inF = passes(p), dm = p.band === "dormant";
+    return `<i style="left:${(100 * Math.min(p.y, 8) / 8).toFixed(1)}%;bottom:${(96 * Math.log10(p.m + 1) / Math.log10(2001)).toFixed(1)}%;width:${dm ? 6 : 4}px;height:${dm ? 6 : 4}px;background:${!inF ? "#202a38" : dm ? "#F0A27F" : "#3a4a63"}"></i>`; }).join("")
+    + `<i class="ax" style="left:0;bottom:-22px">last contact: now</i><i class="ax" style="right:0;bottom:-22px">8 years ago</i><i class="ax" style="left:6px;top:0">more messages ↑</i>`;
+  $("dormant").innerHTML = inView.filter(p => p.band === "dormant").sort((a, b) => b.m - a.m).slice(0, 4).map(p =>
+    `<div class="person"><div class="who">${redact()}<span class="bl" style="color:var(--coral)">dormant strong</span></div>
+     <div class="t">${esc(p.title)} <span>· ${esc(p.org)} · ${p.m} messages, ${when(p.y).replace("last contact ", "last ")}</span></div></div>`).join("")
+    || `<p class="sub">Nobody dormant in this view.</p>`;
+  // groups
+  $("g-tabs").innerHTML = GROUPS.map(g => `<button type="button" data-group="${g.k}" aria-pressed="${st.group === g.k}">${g.label} · ${inView.filter(p => p.g[g.k]).length}</button>`).join("");
+  $("g-ask").textContent = GROUPS.find(g => g.k === st.group).ask;
+  $("g-people").innerHTML = inView.filter(p => p.g[st.group]).sort(sortClose).slice(0, 7).map(personRow).join("") || `<p class="sub">Nobody in this group in this view.</p>`;
+  // insiders
+  const byCo = {};
+  inView.forEach(p => { const c = byCo[p.company] = byCo[p.company] || {type: p.org, count: 0, close: 0}; c.count++; if (p.band === "close" || p.band === "active") c.close++; });
+  $("insiders").innerHTML = Object.values(byCo).sort((a, b) => b.count - a.count || b.close - a.close).slice(0, 8).map(c =>
+    `<div class="co">${redact()}<span class="k">${esc(c.type.replace(/^an? /, "").replace(/^./, s => s.toUpperCase()))}</span><span class="small muted">${c.close ? c.close + " close or active" : ""}</span><b>${c.count}</b></div>`).join("");
+}
+
+// ---- intros (fixed sample; the status button moves it along) ----
+const introPeople = [net.find(p => p.f === "data" && p.org === "a Dutch bank"), net.find(p => p.f === "product" && p.level >= 1),
+                     net.find(p => p.f === "hr"), net.find(p => p.f === "eng" && p.org === "a scale-up")].map(p => p || net[0]);
+const FRIENDS = ["A friend", "My sister's friend", "A former colleague", "Me"];
+function paintIntros() {
+  $("intros").innerHTML = introPeople.map((p, i) => `<div class="intro"><div style="flex:1 1 220px;min-width:0">
+      <div style="font-size:14.5px">${FRIENDS[i]} → ${redact()}</div><div class="small muted">${esc(p.title)} · ${esc(p.org)}</div></div>
+      <button type="button" data-intro="${i}" class="${st.intros[i] >= 2 ? "done" : ""}" title="Move to the next step">${STATUSES[st.intros[i]]} →</button></div>`).join("");
+}
+
+// ---- the search box ----
+function paintAsk() {
+  const ask = search(), box = $("ask-out");
+  if (!ask) { box.innerHTML = ""; return; }
+  if (!ask.count) { box.innerHTML = `<p class="summary">Nobody fits “${esc(st.ask)}” yet. The search looks in job titles, kinds of company and the tags I give people.</p>`; return; }
+  box.innerHTML = `<p class="summary">Read as: ${esc(ask.read)} · ${ask.count === 1 ? "1 person fits" : ask.count + " people fit, best " + Math.min(6, ask.count) + " below"}, lit up in the rings.</p>
+    <div class="results">${ask.results.map(s => `<div class="card"><div class="who"><span class="dot" style="background:${s.p.c}"></span>${redact()}<span class="band ${s.p.band}">${BAND[s.p.band].label}</span></div>
+      <p class="t">${esc(s.p.title)}</p><p class="o">${esc(s.p.org)}</p><p class="why">Why: ${esc(s.why)}</p><p class="ask">Ask: ${esc(suggest(s.p))}</p></div>`).join("")}</div>`;
+}
+$("examples").innerHTML = EXAMPLES.map(q => `<button type="button" data-example="${esc(q)}">${esc(q)}</button>`).join("");
+let askTimer = null;
+$("ask").addEventListener("input", e => { st.ask = e.target.value; clearTimeout(askTimer); askTimer = setTimeout(() => { paintAsk(); paintDots(); }, 120); });
+$("ask").addEventListener("keydown", e => { if (e.key === "Enter") e.target.blur(); });
+$("ask-clear").addEventListener("click", () => { st.ask = ""; $("ask").value = ""; paintAsk(); paintDots(); });
+
+// ---- one click handler for every filter control ----
+function repaint() { paintPanels(); paintDots(); }
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-all],[data-band],[data-signal],[data-context],[data-cell],[data-row],[data-col],[data-unf],[data-clear],[data-group],[data-intro],[data-example],[data-more]");
+  if (!t) return;
+  const d = t.dataset;
+  if (d.all !== undefined || d.clear !== undefined) { st.band.clear(); st.signal.clear(); st.context.clear(); st.cell.clear(); }
+  else if (d.band) toggle(st.band, [d.band]);
+  else if (d.signal) toggle(st.signal, [d.signal]);
+  else if (d.context) toggle(st.context, [d.context]);
+  else if (d.cell) toggle(st.cell, [d.cell]);
+  else if (d.row) toggle(st.cell, LEVELS.map((_, j) => d.row + ":" + j));
+  else if (d.col) toggle(st.cell, FIELDS.map(f => f.k + ":" + d.col));
+  else if (d.unf) { if (d.unf === "cell") st.cell.clear(); else st[d.unf].delete(d.key); }
+  else if (d.group) { st.group = d.group; return paintPanels(); }
+  else if (d.intro) { const i = +d.intro; st.intros[i] = (st.intros[i] + 1) % STATUSES.length; return paintIntros(); }
+  else if (d.more !== undefined) { st.listMore = !st.listMore; return paintPanels(); }
+  else if (d.example) { st.ask = d.example; $("ask").value = d.example; paintAsk(); paintDots(); return; }
+  st.listMore = false;
+  repaint();
+});
+
+if (TOUCH) {
+  $("m-hint").textContent = "Tap numbers to filter every view below; tap more to combine, tap again to remove. Swipe the second row for more.";
+  document.querySelectorAll("#t-ctx .sub, #t-heat .sub").forEach(e => { e.textContent = e.textContent.replace(/click/gi, m => m[0] === "C" ? "Tap" : "tap"); });
+  $("t-list").dataset.touch = "1";
+}
+repaint(); paintHover(); paintIntros(); paintAsk();
+})();
+</script>
+
+</body>
+</html>
